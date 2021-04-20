@@ -31,10 +31,18 @@ const useGame = () => {
     // return true;
   }
 
+  function setPieces() {
+    setState((oldState) => ({
+      ...oldState,
+      tiles: oldState.tiles.map((t) => { t.thisTurn = false; return t; }),
+    }));
+  }
+
   return {
     addPiece,
     canDropTile,
     setGameDetails,
+    setPieces,
     id: state.id,
     tiles: state.tiles,
     lastDropped: state.lastDropped,
