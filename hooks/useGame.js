@@ -47,6 +47,7 @@ const useGame = () => {
     tiles: state.tiles,
     lastDropped: state.lastDropped,
     availableTile: state.availableTile,
+    boardWidth: state.boardWidth,
   };
 };
 

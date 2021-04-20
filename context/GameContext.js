@@ -9,6 +9,7 @@ const GameProvider = ({ children, appData }) => {
     lastDropped: null,
     availableTile: [],
     playerTurn: 0,
+    boardWidth: 12,
     ...appData,
   });
   return (

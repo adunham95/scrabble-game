@@ -4,9 +4,9 @@ import useGame from '../../hooks/useGame';
 import { ItemTypes } from '../DragTypes/DragTypes';
 
 const BoardSquare = ({
-  children, x, y, boardWidth = 10,
+  children, x, y,
 }) => {
-  const { addPiece, canDropTile } = useGame();
+  const { addPiece, canDropTile, boardWidth } = useGame();
   const [{ isOver, canDrop }, drop] = useDrop(
     () => ({
       accept: ItemTypes.TILE,

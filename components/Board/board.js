@@ -3,10 +3,7 @@ import useGame from '../../hooks/useGame';
 import Tile from '../Tile/tile';
 import BoardSquare from './boardSquare';
 
-const boardWidth = 12;
-const boardHeight = 12;
-
-function renderSquare(i, cards = []) {
+function renderSquare(i, cards = [], boardWidth) {
   const x = i % boardWidth;
   const y = Math.floor(i / boardWidth);
 
@@ -34,11 +31,11 @@ function renderSquare(i, cards = []) {
 }
 
 const Board = () => {
-  const { tiles } = useGame();
+  const { tiles, boardWidth } = useGame();
 
   const squares = [];
-  for (let i = 0; i < (boardWidth * boardHeight); i++) {
-    squares.push(renderSquare(i, tiles));
+  for (let i = 0; i < (boardWidth * boardWidth); i++) {
+    squares.push(renderSquare(i, tiles, boardWidth));
   }
 
   return (
