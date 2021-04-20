@@ -3,7 +3,6 @@ import { gql } from 'apollo-server-micro';
 export const typeDefs = gql`
 type Game {
     id: ID!
-    password: String
     tiles: [Tile]
     users: [Student]
     admin: Admin!

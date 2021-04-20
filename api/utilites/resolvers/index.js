@@ -1,5 +1,8 @@
+import { setGame } from './game';
+
 export const resolvers = {
   Query: {
+
     // getAdmin: async () => {
     //   try {
     //     const users = [
@@ -26,5 +29,8 @@ export const resolvers = {
     //     throw error;
     //   }
     // },
+  },
+  Mutation: {
+    createGame: async (_parent, _args, context, _info) => setGame(_args),
   },
 };
