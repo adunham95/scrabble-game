@@ -13,13 +13,13 @@ const useGame = () => {
   }
 
   function addPiece({
-    x, y, letter, id,
+    x, y, letter, id, thisTurn = false,
   }) {
     setState((oldState) => ({
       ...oldState,
       availableTile: oldState.availableTile.filter((t) => t.id !== id),
       tiles: [...oldState.tiles, {
-        x, y, letter, id,
+        x, y, letter, id, thisTurn,
       }],
     }));
   }

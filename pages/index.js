@@ -15,8 +15,18 @@ const letters = [
   { id: 8, letter: 'H' },
 ];
 
+const prevTurns = [
+  {
+    x: 5, y: 5, letter: 'A', id: 700, thisTurn: false,
+  },
+  {
+    x: 5, y: 5, letter: 'D', id: 701, thisTurn: false,
+  },
+];
+
 const AppData = {
   availableTile: letters,
+  tiles: prevTurns,
 };
 export default function Home() {
   return (
