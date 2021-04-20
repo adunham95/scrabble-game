@@ -11,6 +11,7 @@ const Tile = ({
     item: {
       letter,
       id,
+      thisTurn: true,
     },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
