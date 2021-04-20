@@ -12,6 +12,7 @@ function renderSquare(i, cards = []) {
 
   const cardIndex = cards.findIndex((c) => c.x === x && c.y === y);
   const hasItem = cardIndex >= 0;
+  const cardItem = cards[cardIndex];
 
   return (
     <BoardSquare
@@ -22,10 +23,10 @@ function renderSquare(i, cards = []) {
     >
       {hasItem && (
       <Tile
-        key={cards[cardIndex].id}
-        id={cards[cardIndex].id}
-        letter={cards[cardIndex].letter}
-        isDraggable={cards[cardIndex].thisTurn}
+        key={cardItem.id}
+        id={cardItem.id}
+        letter={cardItem.letter}
+        isDraggable={cardItem.thisTurn}
       />
       )}
     </BoardSquare>
