@@ -9,7 +9,8 @@ function execute(command, callback) {
 }
 function getGitUser(callback) {
   console.log('Running builder function');
-  execute('npx @svgr/cli --native -d ReactIcons svgs', function (name) {
+  
+  execute('npx @svgr/cli -d ReactIcons svgs', function (name) {
     callback(console.log('Finished Building ReactIcons'));
   });
   // const iconData = exec('npx @svgr/cli --native -d ReactIcons Icons');
@@ -80,7 +81,7 @@ function buildIconFile(){
   
     console.log(newIconArray)
   
-    const IconFileData = `import React from react;
+    const IconFileData = `import React from 'react';
   import {${newIconArray.map((i) => {
       return i;
   }).join(',\n')}} from './ReactIcons';
