@@ -18,7 +18,7 @@ const useGame = () => {
     setState((oldState) => ({
       ...oldState,
       availableTile: oldState.availableTile.filter((t) => t.id !== id),
-      tiles: [...oldState.tiles, {
+      tiles: [...oldState.tiles.filter((t) => t.id !== id), {
         x, y, letter, id, thisTurn,
       }],
     }));

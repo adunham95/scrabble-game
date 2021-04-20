@@ -25,6 +25,7 @@ function renderSquare(i, cards = []) {
         key={cards[cardIndex].id}
         id={cards[cardIndex].id}
         letter={cards[cardIndex].letter}
+        isDraggable={cards[cardIndex].thisTurn}
       />
       )}
     </BoardSquare>
