@@ -1,0 +1,62 @@
+type Student {
+    id: ID!
+    color: String!
+    icon: String!
+    points: Int!
+    tiles: [Tile]
+}
+
+input StudentInput{
+    color: String!
+    icon: String!
+}
+
+type Admin {
+    id: ID!
+    username: String!
+    password: String!
+}
+
+input AdminInput {
+    username: String!
+    password: String!
+}
+
+type Tile {
+    id: ID!
+    pointValue: Int
+    letter: String!
+}
+
+input TileInput {
+    pointValue: Int
+    letter: String!
+}
+
+type Game {
+    id: ID!
+    password: String
+    tiles: [Tile]
+    users: [Student]
+    admin: Admin!
+}
+
+input GameInput {
+    password: String!
+    users: [Student]
+    admin: Admin!
+}
+
+type Query{
+    #Games
+    game(id: ID!): Game
+}
+
+type Mutation{
+    # 
+    createGame(input: GameInput): Game
+    updateGame(id: ID, input: GameInput): Game
+
+    createStudent(input: StudentInput): Student
+    updateStudent(id: ID!, input: StudentInput): Student
+}
