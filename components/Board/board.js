@@ -3,8 +3,8 @@ import useGame from '../../hooks/useGame';
 import Tile from '../Tile/tile';
 import BoardSquare from './boardSquare';
 
-const boardWidth = 10;
-const boardHeight = 10;
+const boardWidth = 12;
+const boardHeight = 12;
 
 function renderSquare(i, cards = []) {
   const x = i % boardWidth;
@@ -18,6 +18,7 @@ function renderSquare(i, cards = []) {
       x={x}
       y={y}
       key={i}
+      boardWidth={boardWidth}
     >
       {hasItem && (
       <Tile
