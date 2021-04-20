@@ -8,6 +8,7 @@ const GameProvider = ({ children, appData }) => {
     id: '00',
     lastDropped: null,
     availableTile: [],
+    playerTurn: 0,
     ...appData,
   });
   return (
