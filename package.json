@@ -11,5 +11,8 @@
     "react-dom": "^16.7.0",
     "sass": "1.26.3"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@svgr/cli": "^5.5.0"
+  }
 }
