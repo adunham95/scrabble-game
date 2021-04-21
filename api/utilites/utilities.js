@@ -36,3 +36,12 @@ export function makeID(length) {
 
   return word;
 }
+
+export const capitalize = (s) => {
+  if (typeof s !== 'string') return '';
+
+  const textArray = s.split(/[\s,-]+/);
+  const string = textArray.map((t) => t.charAt(0).toUpperCase() + t.slice(1));
+
+  return string.join(' ');
+};
