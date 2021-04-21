@@ -36,6 +36,7 @@
         "react/jsx-props-no-spreading":0,
         "global-require": 0,
         "no-underscore-dangle": 0,
-        "react/react-in-jsx-scope": 0
+        "react/react-in-jsx-scope": 0,
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
     }
 }

@@ -7,17 +7,17 @@ type Game {
     tiles: [Tile]
     users: [Student]
     admin: Admin!
+    password: String!
+    active: Boolean
 }
 
 input GameInput {
-    password: String!
     users: [String]
     adminID: String!
-    name: String!
+    name: String
 }
 
 input GameLogin {
-    name: String!
     password: String!,
     userID: String
 }

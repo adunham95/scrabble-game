@@ -15,3 +15,24 @@ export async function validatePassword(hash, salt, inputPassword) {
   console.log('Password Match', passwordsMatch);
   return passwordsMatch;
 }
+
+const restrictedWords = ['fucker', 'Shitty', 'Retard'];
+
+export function makeID(length) {
+  const result = [];
+  const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result.push(characters.charAt(Math.floor(Math.random()
+* charactersLength)));
+  }
+
+  const word = result.join('').toUpperCase();
+
+  // Word has a non suitable word as the password
+  if (restrictedWords.some((value) => value.toUpperCase() === word)) {
+    makeID(length);
+  }
+
+  return word;
+}
