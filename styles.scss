@@ -18,6 +18,9 @@
     }
     .list-icons{
         margin-bottom: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         svg{
             transition: 0.25s;
         }
@@ -31,8 +34,11 @@
         }
     }
     .list-colors{
-        margin-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         button{
+            margin-bottom: 20px;
             padding: 10px;
             font-size: 1em;
             color: white;
@@ -46,6 +52,10 @@
     .login{
         input{
             padding: 5px;
+            margin-top: 10px;
+            font-size: 2rem;
+            border: none;
+            border-bottom: 1px solid;
         }
         button{
             margin-top: 5px;

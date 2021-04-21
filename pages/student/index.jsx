@@ -58,7 +58,7 @@ const Index = () => {
         }
       </div>
       <div className="login">
-        <input placeholder="Enter Name" />
+        {/* <input placeholder="Enter Name" /> */}
         <input placeholder="Enter Password" />
       </div>
       <div className="login">
