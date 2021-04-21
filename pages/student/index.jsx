@@ -15,13 +15,13 @@ const colors = [
   { name: 'Yellow', color: '#f1dd2f' },
   { name: 'Amber', color: '#ffc107' },
   { name: 'Orange', color: '#FF8201' },
-  { name: 'Smokey', color: '#58595C' },
   { name: 'Brown', color: '#5D4037' },
+  { name: 'Smokey', color: '#58595C' },
 ];
 
 const Index = () => {
   const [selectedAvatar, setSelectedAvatar] = useState(avatars[0]);
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
+  const [selectedColor, setSelectedColor] = useState(colors[colors.length - 1]);
 
   return (
     <div className="loginScreen">
@@ -44,11 +44,15 @@ const Index = () => {
       <div className="list-icons">
         {
             avatars.map((a) => (
-              <button onClick={() => setSelectedAvatar(a)}>
+              <button
+                onClick={() => setSelectedAvatar(a)}
+                className={`${a === selectedAvatar ? 'active' : ''}`}
+              >
                 <Icon
                   name={a}
-                  height={35}
-                  width={35}
+                  color="black"
+                  height={40}
+                  width={40}
                 />
               </button>
             ))
