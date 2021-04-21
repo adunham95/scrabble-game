@@ -1,11 +1,13 @@
 import { UserInputError } from 'apollo-server-errors';
+import { ObjectId } from 'bson';
 import crypto from 'crypto';
 import { connectToDatabase, collections } from '../mongodb';
 
 export async function getGame(id) {
   const { db } = await connectToDatabase();
-  const game = await db.collection(collections.game).findOne({ _id: id });
-
+  console.log(id);
+  const game = await db.collection(collections.game).findOne({ _id: new ObjectId(id) });
+  console.log(game);
   return game;
 }
 
@@ -17,8 +19,14 @@ export async function setGame(data) {
 
   console.log(data);
 
-  if (defaultGame.password < 1) {
+  if (defaultGame.password < 1 || defaultGame.password === '') {
     throw new UserInputError('No Password Specified');
+  }
+  if (defaultGame.adminID < 1 || defaultGame.adminID === '') {
+    throw new UserInputError('No Admin user Specified');
+  }
+  if (defaultGame.name < 1 || defaultGame.name === '') {
+    throw new UserInputError('No Game name Specified');
   }
 
   const salt = crypto.randomBytes(16).toString('hex');

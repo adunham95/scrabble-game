@@ -1,8 +1,8 @@
-import { setGame } from './game';
+import { getGame, setGame } from './game';
 
 export const resolvers = {
   Query: {
-
+    getGame: async (_, args) => getGame(args.id),
     // getAdmin: async () => {
     //   try {
     //     const users = [
