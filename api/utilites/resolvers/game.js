@@ -1,7 +1,7 @@
 import { UserInputError } from 'apollo-server-errors';
 import { ObjectId } from 'bson';
 import { connectToDatabase, collections } from '../mongodb';
-import { hashPassword, makeID } from '../utilities';
+import { capitalize, hashPassword, makeID } from '../utilities';
 
 export async function getGame(id) {
   const { db } = await connectToDatabase();
@@ -17,11 +17,6 @@ export async function setGame(data) {
     users: [], adminID: '', ...data.input,
   };
 
-  console.log(data);
-
-  // if (defaultGame.password < 1 || defaultGame.password === '') {
-  //   throw new UserInputError('No Password Specified');
-  // }
   if (defaultGame.adminID < 1 || defaultGame.adminID === '') {
     throw new UserInputError('No Admin user Specified');
   }
@@ -57,8 +52,25 @@ export async function setGame(data) {
   return newGameData;
 }
 
-export async function loginGame(login, student) {
+export async function loginGame(password, student) {
+  if (password < 1 || password === '') {
+    throw new UserInputError('No Password');
+  }
+
+  const defaultUser = {
+    color: student.color.color,
+    icon: student.icon,
+    points: 0,
+    tiles: [],
+    name: `${capitalize(student.color.name)} ${capitalize(student.color.name)}`,
+  };
+
   const { db } = await connectToDatabase();
-  const game = {};
+  const game = await db.collection(collections.game).findOne({ password });
+
+  const newUser = await db.collection(collections.game).insertOne(defaultUser).then(({ ops }) => ops[0]);
+
+  game.users = [...game.users, newUser];
+
   return game;
 }
