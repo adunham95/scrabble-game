@@ -1,28 +1,36 @@
 import React, { useState } from 'react';
+import { capitalize } from '../../api/utilites/utilities';
 import { Icon } from '../../components/Icons/Icon';
 
-const avatars = ['cat', 'dog', 'dragon', 'elephant', 'horse', 'squirrel', 'turtle', 'unicorn', 'whale'];
+const avatars = ['dog', 'cat', 'dragon', 'elephant', 'horse', 'squirrel', 'turtle', 'unicorn', 'whale'];
 const colors = [
   { name: 'Red', color: '#f44336' },
-  { name: 'Pink', color: '#e91e63' },
+  { name: 'Pink', color: '#E91E63' },
   { name: 'Purple', color: '#673ab7' },
   { name: 'Blue', color: '#2196f3' },
+  { name: 'Teal', color: '#00796B' },
   { name: 'Green', color: '#009688' },
   { name: 'Lime', color: '#cddc39' },
   { name: 'Yellow', color: '#f1dd2f' },
   { name: 'Amber', color: '#ffc107' },
   { name: 'Orange', color: '#FF8201' },
-  { name: 'Smoke', color: '#58595C' },
+  { name: 'Smokey', color: '#58595C' },
+  { name: 'Brown', color: '#5D4037' },
 ];
 
 const Index = () => {
-  const [selectedAvatar, setSelectedAvatar] = useState('dog');
-  const [selectedColor, setSelectedColor] = useState({ name: 'Smoke', color: '#58595C' });
+  const [selectedAvatar, setSelectedAvatar] = useState(avatars[0]);
+  const [selectedColor, setSelectedColor] = useState(colors[0]);
 
   return (
     <div className="loginScreen">
       <div>
         <h1>Join Game</h1>
+        {/* <h2>
+          {capitalize(selectedColor.name)}
+          {' '}
+          {capitalize(selectedAvatar)}
+        </h2> */}
       </div>
       <div className="main-icon">
         <Icon
