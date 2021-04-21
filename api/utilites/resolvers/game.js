@@ -1,7 +1,7 @@
 import { UserInputError } from 'apollo-server-errors';
 import { ObjectId } from 'bson';
-import crypto from 'crypto';
 import { connectToDatabase, collections } from '../mongodb';
+import { hashPassword } from '../utilities';
 
 export async function getGame(id) {
   const { db } = await connectToDatabase();
@@ -29,8 +29,7 @@ export async function setGame(data) {
     throw new UserInputError('No Game name Specified');
   }
 
-  const salt = crypto.randomBytes(16).toString('hex');
-  const hash = crypto.pbkdf2Sync(defaultGame.password, salt, 1000, 64, 'sha512').toString('hex');
+  const { salt, hash } = await hashPassword(defaultGame.password);
 
   delete defaultGame.password;
 
@@ -42,9 +41,15 @@ export async function setGame(data) {
     adminID: defaultGame.adminID,
   };
 
-  const newGameData = await db.collection(collections.game).insertOne(newGame).then(({ ops }) => ops);
+  const newGameData = await db.collection(collections.game).insertOne(newGame).then(({ ops }) => ops[0]);
 
   console.log(newGameData);
 
   return newGameData;
+}
+
+export async function loginGame(login, student) {
+  const { db } = await connectToDatabase();
+  const game = {};
+  return game;
 }
