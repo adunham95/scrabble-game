@@ -17,11 +17,6 @@ input GameInput {
     name: String
 }
 
-input GameLogin {
-    password: String!,
-    userID: String
-}
-
 type Tile {
     id: ID!
     pointValue: Int

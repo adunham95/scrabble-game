@@ -1,4 +1,4 @@
-import { getGame, setGame } from './game';
+import { getGame, loginGame, setGame } from './game';
 
 export const resolvers = {
   Query: {
@@ -32,5 +32,6 @@ export const resolvers = {
   },
   Mutation: {
     createGame: async (_parent, _args, context, _info) => setGame(_args),
+    loginGame: async (_, args) => loginGame(args.password, args.user),
   },
 };

@@ -2,16 +2,27 @@ import { gql } from 'apollo-server-micro';
 
 export const typeDefs = gql`
     type Student {
-    id: ID!
-    color: String!
+    _id: ID!
     icon: String!
-    points: Int!
+    color: String!
+    points: Int
     tiles: [Tile]
+    name: String!
+}
+
+type StudentColor{
+    name: String!
+    color: String!
 }
 
 input StudentInput{
-    color: String!
     icon: String!
+    color: StudentColorInput!
+}
+
+input StudentColorInput{
+    name: String!
+    color: String!
 }
 
 type Admin {
