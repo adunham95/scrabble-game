@@ -4,6 +4,7 @@ import { Icon } from '../../components/Icons/Icon';
 
 const avatars = ['dog', 'cat', 'dragon', 'elephant', 'horse', 'squirrel', 'turtle', 'unicorn', 'whale'];
 const colors = [
+  { name: 'Dark Red', color: '#A60C31' },
   { name: 'Red', color: '#f44336' },
   { name: 'Pink', color: '#E91E63' },
   { name: 'Purple', color: '#673ab7' },
@@ -60,7 +61,7 @@ const Index = () => {
                 onClick={() => setSelectedColor(c)}
                 style={{ backgroundColor: c.color }}
               >
-                {c.name}
+                {capitalize(c.name)}
               </button>
             ))
         }
