@@ -62,13 +62,13 @@ export async function loginGame(password, student) {
     icon: student.icon,
     points: 0,
     tiles: [],
-    name: `${capitalize(student.color.name)} ${capitalize(student.color.name)}`,
+    name: `${capitalize(student.color.name)} ${capitalize(student.icon)}`,
   };
 
   const { db } = await connectToDatabase();
   const game = await db.collection(collections.game).findOne({ password });
 
-  const newUser = await db.collection(collections.game).insertOne(defaultUser).then(({ ops }) => ops[0]);
+  const newUser = await db.collection(collections.user).insertOne(defaultUser).then(({ ops }) => ops[0]);
 
   game.users = [...game.users, newUser];
 
