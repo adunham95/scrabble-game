@@ -80,4 +80,55 @@
             }
         }
     }
+    .loader{
+        border-radius: 50%;
+        position: relative;
+        margin: 50px;
+        display: inline-block;
+        height: 0px;
+        width: 0px;
+        span{
+            position: absolute;
+            display: block;
+            background: #ddd;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            top: -20px;
+            perspective: 1000000px;
+            &:nth-child(1){
+                left: 60px;
+                animation: bounce 1s cubic-bezier(0.04, 0.35, 0, 1) infinite;
+                animation-delay: 0s;
+                background: #ff756f;
+            }
+            &:nth-child(2){
+                left: 20px;
+                animation: bounce 1s cubic-bezier(0.04, 0.35, 0, 1) infinite;
+                animation-delay: 0.2s;
+                background: #ffde6f;
+            }
+            &:nth-child(3){
+                left: -20px;
+                animation: bounce 1s cubic-bezier(0.04, 0.35, 0, 1) infinite;
+                animation-delay: 0.4s;
+                background: #01de6f;
+            }
+            &:nth-child(4){
+                left: -60px;
+                animation: bounce 1s cubic-bezier(0.04, 0.35, 0, 1) infinite;
+                animation-delay: 0.6s;
+                background: #6f75ff;
+            }
+        }
+    }
+}
+
+@keyframes bounce2 {
+    0%, 75%, 100%{
+        transform: translateY(0px);
+    }
+    25%{
+        transform: translateY(-30px);
+    }
 }
