@@ -1,0 +1,55 @@
+$animationTime: 1.5s;
+
+.loaderDot{
+    border-radius: 50%;
+    position: relative;
+    margin: 50px;
+    margin-top: 60px;
+    display: inline-block;
+    height: 0px;
+    width: 0px;
+    padding: 10px;
+    span{
+        position: absolute;
+        display: block;
+        background: #ddd;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        top: -20px;
+        perspective: 1000000px;
+        &:nth-child(1){
+            left: 60px;
+            animation: bounce $animationTime cubic-bezier(0.04, 0.35, 0, 1) infinite;
+            animation-delay: 0s;
+            background: #ff756f;
+        }
+        &:nth-child(2){
+            left: 20px;
+            animation: bounce $animationTime cubic-bezier(0.04, 0.35, 0, 1) infinite;
+            animation-delay: 0.3s;
+            background: #ffde6f;
+        }
+        &:nth-child(3){
+            left: -20px;
+            animation: bounce $animationTime cubic-bezier(0.04, 0.35, 0, 1) infinite;
+            animation-delay: 0.6s;
+            background: #01de6f;
+        }
+        &:nth-child(4){
+            left: -60px;
+            animation: bounce $animationTime cubic-bezier(0.04, 0.35, 0, 1) infinite;
+            animation-delay: 0.9s;
+            background: #6f75ff;
+        }
+    }
+}
+
+@keyframes bounce {
+    0%, 75%, 100%{
+        transform: translateY(0px);
+    }
+    25%{
+        transform: translateY(-30px);
+    }
+}
