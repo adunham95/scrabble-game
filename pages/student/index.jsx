@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { gql, useApolloClient, useMutation } from '@apollo/client';
 import { capitalize } from '../../api/utilites/utilities';
 import { Icon } from '../../components/Icons/Icon';
 
@@ -8,7 +9,7 @@ const colors = [
   { name: 'Red', color: '#f44336' },
   { name: 'Pink', color: '#E91E63' },
   { name: 'Purple', color: '#673ab7' },
-  { name: 'Blue', color: '#2196f3' },
+  { name: 'Blue', color: '#0085ca' },
   { name: 'Teal', color: '#00796B' },
   { name: 'Green', color: '#009688' },
   { name: 'Lime', color: '#cddc39' },
@@ -18,6 +19,20 @@ const colors = [
   { name: 'Brown', color: '#5D4037' },
   { name: 'Smokey', color: '#58595C' },
 ];
+
+const LogInMutation = gql`
+mutation($password:String!,$student:StudentInput!){
+  loginGame(password:$password, user:$student){
+    name
+    _id
+    users{
+      _id
+      icon
+      name
+    }
+  }
+}
+`;
 
 const Index = () => {
   const [selectedAvatar, setSelectedAvatar] = useState(avatars[0]);
