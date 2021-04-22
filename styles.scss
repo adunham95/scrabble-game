@@ -26,15 +26,19 @@
         }
         button{
             transition: 0.5s;
+            cursor: pointer;
             &.active{
                 svg{
                     transform: scale(1.1);
                 }
             }
-            &:hover{
+            &:not(:disabled):hover{
                 svg{
                     transform: scale(1.2);
                 }
+            }
+            &:disabled{
+                cursor: initial;
             }
         }
     }
@@ -50,8 +54,11 @@
             color: white;
             border-radius: 10px;
             transition: 0.25s;
-            &:hover{
+            &:not(:disabled):hover{
                 transform: scale(1.2);
+            }
+            &:disabled{
+                cursor: initial;
             }
         }
     }
@@ -74,51 +81,9 @@
             font-weight: bold;
             text-transform: uppercase;
             transition: 0.2s;
-            &:hover{
+            &:not(:disabled):hover{
                 color: green;
                 background: transparent;
-            }
-        }
-    }
-    .loader{
-        border-radius: 50%;
-        position: relative;
-        margin: 50px;
-        display: inline-block;
-        height: 0px;
-        width: 0px;
-        span{
-            position: absolute;
-            display: block;
-            background: #ddd;
-            height: 20px;
-            width: 20px;
-            border-radius: 50%;
-            top: -20px;
-            perspective: 1000000px;
-            &:nth-child(1){
-                left: 60px;
-                animation: bounce 1s cubic-bezier(0.04, 0.35, 0, 1) infinite;
-                animation-delay: 0s;
-                background: #ff756f;
-            }
-            &:nth-child(2){
-                left: 20px;
-                animation: bounce 1s cubic-bezier(0.04, 0.35, 0, 1) infinite;
-                animation-delay: 0.2s;
-                background: #ffde6f;
-            }
-            &:nth-child(3){
-                left: -20px;
-                animation: bounce 1s cubic-bezier(0.04, 0.35, 0, 1) infinite;
-                animation-delay: 0.4s;
-                background: #01de6f;
-            }
-            &:nth-child(4){
-                left: -60px;
-                animation: bounce 1s cubic-bezier(0.04, 0.35, 0, 1) infinite;
-                animation-delay: 0.6s;
-                background: #6f75ff;
             }
         }
     }

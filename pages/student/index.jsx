@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { gql, useApolloClient, useMutation } from '@apollo/client';
 import { capitalize } from '../../api/utilites/utilities';
 import { Icon } from '../../components/Icons/Icon';
+import { initializeApollo } from '../../utilities/apollo_client/client';
+import Loader from '../../components/Loader/loader';
 
 const avatars = ['dog', 'cat', 'dragon', 'elephant', 'horse', 'squirrel', 'turtle', 'unicorn', 'whale'];
 const colors = [
@@ -35,8 +37,22 @@ mutation($password:String!,$student:StudentInput!){
 `;
 
 const Index = () => {
+  const client = useApolloClient();
+  const [loginGame] = useMutation(LogInMutation);
   const [selectedAvatar, setSelectedAvatar] = useState(avatars[0]);
   const [selectedColor, setSelectedColor] = useState(colors[colors.length - 1]);
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const login = async () => {
+    console.log('password', password);
+    setIsLoading(true);
+    // try {
+    //   client.resetStore();
+    // } catch {
+    //   //
+    // }
+  };
 
   return (
     <div className="loginScreen">
@@ -62,6 +78,7 @@ const Index = () => {
               <button
                 onClick={() => setSelectedAvatar(a)}
                 className={`${a === selectedAvatar ? 'active' : ''}`}
+                disabled={isLoading}
               >
                 <Icon
                   name={a}
@@ -79,6 +96,7 @@ const Index = () => {
               <button
                 onClick={() => setSelectedColor(c)}
                 style={{ backgroundColor: c.color }}
+                disabled={isLoading}
               >
                 {capitalize(c.name)}
               </button>
@@ -87,13 +105,31 @@ const Index = () => {
       </div>
       <div className="login">
         {/* <input placeholder="Enter Name" /> */}
-        <input placeholder="Enter Password" />
+        <input
+          placeholder="Enter Password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          disabled={isLoading}
+        />
       </div>
       <div className="login">
-        <button>Login</button>
+        {
+          isLoading ? <Loader />
+            : <button onClick={login}>Login</button>
+}
       </div>
     </div>
   );
 };
+
+export async function getStaticProps() {
+  const apolloClient = initializeApollo();
+
+  return {
+    props: {
+      initialApolloState: apolloClient.cache.extract(),
+    },
+  };
+}
 
 export default Index;
