@@ -68,6 +68,10 @@ export async function loginGame(password, student) {
   const { db } = await connectToDatabase();
   const game = await db.collection(collections.game).findOne({ password });
 
+  if (game === null) {
+    throw new UserInputError('Game not found');
+  }
+
   const newUser = await db.collection(collections.user).insertOne(defaultUser).then(({ ops }) => ops[0]);
 
   game.users = [...game.users, newUser];

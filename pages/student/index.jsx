@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { gql, useApolloClient, useMutation } from '@apollo/client';
 import { capitalize } from '../../api/utilites/utilities';
 import { Icon } from '../../components/Icons/Icon';
-import { initializeApollo } from '../../utilities/apollo_client/client';
 import Loader from '../../components/Loader/loader';
 
 const avatars = ['dog', 'cat', 'dragon', 'elephant', 'horse', 'squirrel', 'turtle', 'unicorn', 'whale'];
@@ -27,11 +26,6 @@ mutation($password:String!,$student:StudentInput!){
   loginGame(password:$password, user:$student){
     name
     _id
-    users{
-      _id
-      icon
-      name
-    }
   }
 }
 `;
@@ -47,11 +41,24 @@ const Index = () => {
   const login = async () => {
     console.log('password', password);
     setIsLoading(true);
-    // try {
-    //   client.resetStore();
-    // } catch {
-    //   //
-    // }
+    try {
+      await client.resetStore();
+      const { data } = await loginGame({
+        variables: {
+          password,
+          student: {
+            color: selectedColor,
+            icon: selectedAvatar,
+          },
+        },
+      });
+      console.log(data);
+      setIsLoading(false);
+      // Set session cookie so they can come back to the game
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -121,15 +128,5 @@ const Index = () => {
     </div>
   );
 };
-
-export async function getStaticProps() {
-  const apolloClient = initializeApollo();
-
-  return {
-    props: {
-      initialApolloState: apolloClient.cache.extract(),
-    },
-  };
-}
 
 export default Index;
