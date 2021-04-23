@@ -52,3 +52,18 @@ export function useApollo(initialState) {
   const store = useMemo(() => initializeApollo(initialState), [initialState]);
   return store;
 }
+
+/* eslint-disable no-restricted-syntax */
+export function getApolloMessage(error) {
+  if (error.graphQLErrors) {
+    for (const graphQLError of error.graphQLErrors) {
+      if (
+        graphQLError.extensions
+          && graphQLError.extensions.code === 'BAD_USER_INPUT'
+      ) {
+        return graphQLError.message;
+      }
+    }
+  }
+  return error.message;
+}
