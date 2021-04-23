@@ -5,7 +5,7 @@ export const typeDefs = gql`
     type Mutation{
         createGame(input: GameInput): Game
         updateGame(id: ID, input: GameInput): Game
-        loginGame(password: String!, user:StudentInput!): Game
+        loginGame(password: String!, user:StudentInput!): GameLogin
 
         createTile(input: TileInput): Tile
 

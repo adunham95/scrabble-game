@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { gql, useApolloClient, useMutation } from '@apollo/client';
+import cookieCutter from 'cookie-cutter';
 import { capitalize } from '../../api/utilites/utilities';
 import { Icon } from '../../components/Icons/Icon';
 import Loader from '../../components/Loader/loader';
@@ -28,6 +29,7 @@ mutation($password:String!,$student:StudentInput!){
   loginGame(password:$password, user:$student){
     name
     _id
+    userID
   }
 }
 `;
@@ -44,7 +46,6 @@ const Index = () => {
   const login = async () => {
     setIsLoading(true);
     setMessage({ type: '', message: '' });
-    console.log('password', password);
     if (password === '') {
       setMessage({ type: 'error', message: 'Password Is Empty' });
       setIsLoading(false);
@@ -64,7 +65,7 @@ const Index = () => {
       console.log(data);
       setIsLoading(false);
       setMessage({ type: 'success', message: 'Going to game' });
-      // Set session cookie so they can come back to the game
+      cookieCutter.set('userID', data.loginGame.userID);
     } catch (error) {
       console.log(error);
       setIsLoading(false);

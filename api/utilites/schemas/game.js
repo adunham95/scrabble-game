@@ -11,6 +11,16 @@ type Game {
     active: Boolean
 }
 
+type GameLogin {
+    _id: ID!
+    name: String
+    tiles: [Tile]
+    admin: Admin!
+    password: String!
+    active: Boolean
+    userID: ID!
+}
+
 input GameInput {
     users: [String]
     adminID: String!
