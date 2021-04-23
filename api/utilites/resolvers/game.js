@@ -74,6 +74,8 @@ export async function loginGame(password, student) {
 
   const newUser = await db.collection(collections.user).insertOne(defaultUser).then(({ ops }) => ops[0]);
 
+  db.collection(collections.game).update({ _id: game._id }, { $push: newUser._id });
+
   game.users = [...game.users, newUser];
 
   return game;
