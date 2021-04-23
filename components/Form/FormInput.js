@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FormLabel, FormSubText } from './FormText';
 
 export const FormInput = ({
-  id = '', placeholder = '', value = '', onChange, label = '', required = false, subtext = '',
+  id = '', placeholder = '', value = '', onChange, label = '', required = false, subtext = '', type = 'text',
 }) => {
   const [content, setContent] = useState('');
 
@@ -42,7 +42,7 @@ export const FormInput = ({
         }
         <div className="mt-1 flex rounded-md">
           <input
-            type="text"
+            type={type}
             id={id}
             className="form-input border border-gray-300 w-full focus:border-indigo-500"
             placeholder={placeholder}
