@@ -1,0 +1,72 @@
+$error: #cf000f;
+$success: #009944;
+$info: #63c0df;
+$warn: #ffb703;
+
+.message{
+    font-size: 1.5em;
+    font-weight: bold;
+    display: flex;
+    // align-items: center;
+    // border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 4px 4px 13px 0px #d6d6d6;
+    margin: 7px;
+    overflow: hidden;
+    max-width: 250px;
+    &Error{
+        // color: $error;
+        .iconContainer{
+            background: linear-gradient(45deg, $error, lighten( $error, 30% ));
+        }
+    }
+    &Success{
+        // color: $success;
+        .iconContainer{
+            background: linear-gradient(45deg, $success, lighten( $success, 10% ));
+        }
+    }
+    &Info{
+        // color: $info;
+        .iconContainer{
+            background: linear-gradient(45deg, $info, lighten( $info, 15% ));
+        }
+    }
+    &Warn{
+        // color: $warn;
+        .iconContainer{
+            background: linear-gradient(45deg, $warn, lighten( $warn, 30% ));
+        }
+    }
+}
+
+.iconContainer{
+    position: relative;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    min-width: 50px;
+    path{
+        fill: white;
+    }
+}
+
+.text{
+    &Container{
+        padding: 5px 10px;
+        font-family: sans-serif;
+        p{
+            margin:0;
+        }
+    }
+    &Type{
+        color: #495057;
+        font-size: 0.9em;
+    }
+    &Text{
+        color: #b2b9c1;
+        font-size: 0.65em;
+    }
+}

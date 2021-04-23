@@ -3,6 +3,8 @@ import { gql, useApolloClient, useMutation } from '@apollo/client';
 import { capitalize } from '../../api/utilites/utilities';
 import { Icon } from '../../components/Icons/Icon';
 import Loader from '../../components/Loader/loader';
+import { getApolloMessage } from '../../utilities/apollo_client/client';
+import { Message } from '../../components/Text/Message';
 
 const avatars = ['dog', 'cat', 'dragon', 'elephant', 'horse', 'squirrel', 'turtle', 'unicorn', 'whale'];
 const colors = [
@@ -37,10 +39,17 @@ const Index = () => {
   const [selectedColor, setSelectedColor] = useState(colors[colors.length - 1]);
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState({ type: '', message: '' });
 
   const login = async () => {
-    console.log('password', password);
     setIsLoading(true);
+    setMessage({ type: '', message: '' });
+    console.log('password', password);
+    if (password === '') {
+      setMessage({ type: 'error', message: 'Password Is Empty' });
+      setIsLoading(false);
+      return;
+    }
     try {
       await client.resetStore();
       const { data } = await loginGame({
@@ -54,10 +63,12 @@ const Index = () => {
       });
       console.log(data);
       setIsLoading(false);
+      setMessage({ type: 'success', message: 'Going to game' });
       // Set session cookie so they can come back to the game
     } catch (error) {
       console.log(error);
       setIsLoading(false);
+      setMessage({ type: 'error', message: getApolloMessage(error) });
     }
   };
 
@@ -117,6 +128,12 @@ const Index = () => {
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           disabled={isLoading}
+        />
+      </div>
+      <div>
+        <Message
+          type={message.type}
+          text={message.message}
         />
       </div>
       <div className="login">
