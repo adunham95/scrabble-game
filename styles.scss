@@ -1,3 +1,10 @@
+body{
+    font-family: sans-serif;
+}
+
+@import "./pageStyles/normalize";
+
+
 .loginScreen{
     display: flex;
     flex-direction: column;
