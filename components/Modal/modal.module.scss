@@ -4,7 +4,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%s);
+        transform: translate(-50%, -50%);
     }
     &Bottom{
         position: absolute;
@@ -21,8 +21,13 @@
 }
 
 
-.modal
-
-.modalInner{
-    background: green;
+.modal{
+    background: #202427;
+    color: #e3e4e4;
+    padding: 15px;
+    border-radius: 10px;
+    min-width: 250px;
+    max-width: 1000px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
 }
