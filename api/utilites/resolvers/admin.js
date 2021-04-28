@@ -16,6 +16,7 @@ export async function setAdmin({ admin }) {
   const { hash, salt } = await hashPassword(admin.password);
 
   const adminUser = {
+    invite: admin.invite ? admin.invite : '',
     email: admin.email,
     hash,
     salt,
