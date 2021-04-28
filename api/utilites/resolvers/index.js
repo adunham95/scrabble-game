@@ -1,3 +1,4 @@
+import { loginAdmin, setAdmin } from './admin';
 import { getGame, loginGame, setGame } from './game';
 
 export const resolvers = {
@@ -31,6 +32,8 @@ export const resolvers = {
     // },
   },
   Mutation: {
+    createAdmin: async (_parent, _args, context, info) => setAdmin(_args),
+    loginAdmin: async (_parent, _args, context, _info) => loginAdmin(_args),
     createGame: async (_parent, _args, context, _info) => setGame(_args),
     loginGame: async (_, args) => loginGame(args.password, args.user),
   },

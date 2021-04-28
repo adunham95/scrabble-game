@@ -27,7 +27,7 @@ export async function setGame(data) {
   async function generatePassword() {
     const password = makeID(6);
 
-    const previousPassword = await db.collection(collections.game).find({ password });
+    const previousPassword = await db.collection(collections.game).find({ password }).toArray();
 
     if (previousPassword.length > 0) {
       generatePassword();
