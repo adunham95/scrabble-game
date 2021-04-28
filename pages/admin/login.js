@@ -1,5 +1,6 @@
 import { gql, useApolloClient, useMutation } from '@apollo/client';
 import React, { useState } from 'react';
+import { signIn } from 'next-auth/client';
 import { getApolloMessage } from '../../utilities/apollo_client/client';
 import styles from '../../pageStyles/admin.module.scss';
 import FakeTile from '../../components/Tile/tileFake';
@@ -20,6 +21,7 @@ const Login = () => {
   const [message, setMessage] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [loginAdmin] = useMutation(LoginMutation);
+
   const login = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -29,24 +31,25 @@ const Login = () => {
       setIsLoading(false);
       return;
     }
-    try {
-      await client.resetStore();
-      const { data } = await loginAdmin({
-        variables: {
-          admin: {
-            email,
-            password,
-          },
-        },
-      });
-      console.log(data);
-      setIsLoading(false);
-      setMessage({ type: 'success', message: 'Logging In' });
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
-      setMessage({ type: 'error', message: getApolloMessage(error) });
-    }
+    signIn('credentials', { email, password, callbackUrl: '/admin/dashboard' });
+    // try {
+    //   await client.resetStore();
+    //   const { data } = await loginAdmin({
+    //     variables: {
+    //       admin: {
+    //         email,
+    //         password,
+    //       },
+    //     },
+    //   });
+    //   console.log(data);
+    //   setIsLoading(false);
+    //   setMessage({ type: 'success', message: 'Logging In' });
+    // } catch (error) {
+    //   console.log(error);
+    //   setIsLoading(false);
+    //   setMessage({ type: 'error', message: getApolloMessage(error) });
+    // }
   };
 
   return (

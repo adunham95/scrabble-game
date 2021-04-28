@@ -3,7 +3,7 @@ import { getGame, loginGame, setGame } from './game';
 
 export const resolvers = {
   Query: {
-    getGame: async (_, args) => getGame(args.id),
+    getGame: async (_, args, context) => getGame(args.id, context),
     // getAdmin: async () => {
     //   try {
     //     const users = [
@@ -32,8 +32,8 @@ export const resolvers = {
     // },
   },
   Mutation: {
-    createAdmin: async (_parent, _args, context, info) => setAdmin(_args),
-    loginAdmin: async (_parent, _args, context, _info) => loginAdmin(_args),
+    createAdmin: async (_parent, _args, context, info) => setAdmin(_args, context),
+    loginAdmin: async (_parent, _args, context, _info) => loginAdmin(_args, context),
     createGame: async (_parent, _args, context, _info) => setGame(_args),
     loginGame: async (_, args) => loginGame(args.password, args.user),
   },

@@ -3,7 +3,8 @@ import { ObjectId } from 'bson';
 import { connectToDatabase, collections } from '../mongodb';
 import { capitalize, hashPassword, makeID } from '../utilities';
 
-export async function getGame(id) {
+export async function getGame(id, context) {
+  // console.log(context);
   const { db } = await connectToDatabase();
   console.log(id);
   const game = await db.collection(collections.game).findOne({ _id: new ObjectId(id) });
@@ -11,7 +12,7 @@ export async function getGame(id) {
   return game;
 }
 
-export async function setGame(data) {
+export async function setGame(data, context) {
   const { db } = await connectToDatabase();
   const defaultGame = {
     users: [], adminID: '', ...data.input,

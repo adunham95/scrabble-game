@@ -1,8 +1,9 @@
 import { UserInputError } from 'apollo-server-errors';
+import jwt from 'jsonwebtoken';
 import { connectToDatabase, collections } from '../mongodb';
 import { hashPassword, validatePassword } from '../utilities';
 
-export async function setAdmin({ admin }) {
+export async function setAdmin({ admin }, context) {
   const { db } = await connectToDatabase();
 
   console.log(admin);
@@ -27,12 +28,12 @@ export async function setAdmin({ admin }) {
   return newAdmin;
 }
 
-export async function loginAdmin({ admin }) {
+export async function loginAdmin({ admin }, context) {
   const { db } = await connectToDatabase();
 
   const adminAccountInfo = await db.collection(collections.admin).findOne({ email: admin.email });
 
-  console.log(adminAccountInfo);
+  // console.log(adminAccountInfo);
 
   if (adminAccountInfo === null) {
     throw new UserInputError('Email not found');
@@ -43,6 +44,14 @@ export async function loginAdmin({ admin }) {
   if (!match) {
     throw new UserInputError('Password Error');
   }
+
+  const token = jwt.sign({ _id: adminAccountInfo._id }, 'secret');
+  context.cookies.set('auth-token', token, {
+    httpOnly: true,
+    sameSite: 'lax',
+    // here we put 6 hours, but you can put whatever you want (the shorter the safer, but also more annoying)
+    maxAge: 6 * 60 * 60,
+  });
 
   return {
     _id: adminAccountInfo._id,
