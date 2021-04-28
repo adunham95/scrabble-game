@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import badWords from '../../utilities/data/lang.json';
 
 export async function hashPassword(password) {
   const salt = crypto.randomBytes(16).toString('hex');
@@ -16,21 +17,41 @@ export async function validatePassword(hash, salt, inputPassword) {
   return passwordsMatch;
 }
 
-const restrictedWords = ['fucker', 'Shitty', 'Retard'];
+export function isProfane(string, customWords = []) {
+  const badWordList = [...badWords.words, ...customWords];
+
+  return badWordList
+    .filter((word) => {
+      const wordExp = new RegExp(`\\b${word.replace(/(\W)/g, '\\$1')}\\b`, 'gi');
+      return wordExp.test(string);
+    })
+    .length > 0 || false;
+}
+
+export function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+export function isEven(value) {
+  if (value % 2 == 0) return true;
+  return false;
+}
 
 export function makeID(length) {
   const result = [];
   const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   const charactersLength = characters.length;
   for (let i = 0; i < length; i++) {
-    result.push(characters.charAt(Math.floor(Math.random()
-* charactersLength)));
+    result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
   }
 
   const word = result.join('').toUpperCase();
 
+  // console.log('word', word);
+
   // Word has a non suitable word as the password
-  if (restrictedWords.some((value) => value.toUpperCase() === word)) {
+  // console.log('isProfane', isProfane(word));
+  if (isProfane(word)) {
     makeID(length);
   }
 
