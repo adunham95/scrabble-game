@@ -1,0 +1,31 @@
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.row{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.headline{
+    text-align: center;
+    margin: 10px 0;
+}
+
+.adminBox{
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 0px 14px 1px grey;
+    min-width: 300px;
+    form{
+        display: flex;
+        flex-direction: column;
+        input{
+            margin-bottom: 10px;
+        }
+    }
+}

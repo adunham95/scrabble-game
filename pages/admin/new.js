@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { gql, useApolloClient, useMutation } from '@apollo/client';
 import { getApolloMessage } from '../../utilities/apollo_client/client';
+import styles from '../../pageStyles/admin.module.scss';
 
 const inviteRequired = true;
 
@@ -63,27 +64,35 @@ const NewAdminPage = () => {
   }
 
   return (
-    <div>
-      <h1>New Admin</h1>
-      <form onSubmit={(e) => createUser(e)}>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
-        <input
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button>
-          Create User
-        </button>
-        <p className={`alert-${message.type}`}>
-          {message.message}
-        </p>
-      </form>
+    <div className={styles.center}>
+      <div className={styles.adminBox}>
+        <div className={styles.tileContainer}>
+          <div className={styles.tile}>
+            <span className={styles.tileLetter}>A</span>
+            <span className={styles.tileScore}>7</span>
+          </div>
+        </div>
+        <h1 className={styles.headline}>New Admin</h1>
+        <form onSubmit={(e) => createUser(e)}>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+          />
+          <input
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button>
+            Create User
+          </button>
+          <p className={`alert-${message.type}`}>
+            {message.message}
+          </p>
+        </form>
+      </div>
     </div>
   );
 };

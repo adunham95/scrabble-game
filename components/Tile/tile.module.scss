@@ -1,0 +1,28 @@
+.tileFake{
+    height: 3em;
+    width: 3em;
+    background:  #846a42;
+    // box-shadow: 2px 2px 1px darken( #846a42, 10);
+    position: relative;
+    border-radius: 5px;
+    color: rgb(231, 231, 231);
+    margin: 0.2em;
+    margin-bottom: 0.4em;
+    &Letter{
+        font-size: 2em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    &Score{
+        font-size: 0.55em;
+        position: absolute;
+        bottom: 0.25em;
+        right: 0.5em;
+    }
+    &Container{
+        display: flex;
+        justify-content: center;
+    }
+}
