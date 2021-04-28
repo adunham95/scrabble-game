@@ -10,6 +10,7 @@ type Admin {
 input AdminInput{
     email: String!
     password: String!
+    invite: String
 }
 
 `;
