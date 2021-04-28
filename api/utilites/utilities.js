@@ -37,22 +37,25 @@ export function isEven(value) {
   return false;
 }
 
-export function makeID(length) {
+function buildID(length) {
   const result = [];
   const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   const charactersLength = characters.length;
   for (let i = 0; i < length; i++) {
-    result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
+    result.push(characters.charAt(Math.floor(Math.random()
+* charactersLength)));
   }
 
   const word = result.join('').toUpperCase();
 
-  // console.log('word', word);
+  return word;
+}
 
-  // Word has a non suitable word as the password
-  // console.log('isProfane', isProfane(word));
-  if (isProfane(word)) {
-    makeID(length);
+export function makeID(length) {
+  let word = buildID(length);
+
+  while (isProfane(word)) {
+    word = buildID(length);
   }
 
   return word;
