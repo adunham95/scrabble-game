@@ -6,7 +6,7 @@ import {
 export const resolvers = {
   Query: {
     getGame: async (_, args, context) => getGame(args.id, context),
-    getGamesByAdmin: async (_, args, context) => getGamesByAdmin(args.adminID),
+    getGamesByAdmin: async (_, args, context) => getGamesByAdmin(args.adminID, context),
   },
   Mutation: {
     createAdmin: async (_parent, _args, context, info) => setAdmin(_args, context),
