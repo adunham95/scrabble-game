@@ -5,12 +5,17 @@ type Admin {
     _id: ID!
     email: String!
     games: [Game]
+    firstName: String
+    lastName: String
+    invite: String
 }
 
 input AdminInput{
     email: String!
     password: String!
     invite: String
+    firstName: String
+    lastName: String
 }
 
 `;

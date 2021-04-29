@@ -19,7 +19,7 @@ const options = {
     },
     async jwt(token, user, account, profile, isNewUser) {
       if (user?._id) {
-        token._id = user?._id;
+        token = { ...token, ...user };
       }
       return token;
     },
@@ -32,10 +32,9 @@ const options = {
 
         const adminAccountInfo = await db.collection(collections.admin).findOne({ email: credentials.email });
         const match = await validatePassword(adminAccountInfo.hash, adminAccountInfo.salt, credentials.password);
-        console.log(match);
 
         delete adminAccountInfo.hash;
-        delete adminAccountInfo.slat;
+        delete adminAccountInfo.salt;
 
         if (match) {
           return adminAccountInfo;
