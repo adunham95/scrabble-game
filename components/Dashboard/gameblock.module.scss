@@ -21,10 +21,24 @@
         border: 2px solid white;
         height: 1em;
         width: 1em;
-        background: rgba(black, 0.2);
-        border-radius: 50%;
+        background: rgba(#846a42, 0.9);
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(231, 231, 231);
+        transition: 0.2s;
         &+&{
             margin-left: -0.75em;
+        }
+        &Container{
+            display: flex;
+            &:hover{
+                .gameBlockIcon{
+                    margin: 0;
+                    background: rgba(#846a42, 1);
+                }
+            }
         }
     }
     &Title{

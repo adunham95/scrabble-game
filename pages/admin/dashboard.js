@@ -25,20 +25,15 @@ const testGameData = [
     name: 'Test Quiz 1',
     password: '',
     color: '#00a084',
+    tiles: ['A', 'B', 'C', 'X', 'Y', 'Q'],
   },
   {
     __typename: 'Game',
     _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 2',
+    name: 'Test Quiz 1',
     password: '',
-    color: '#ffcf58',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 3',
-    password: '',
-    color: '#6970fc',
+    color: '#00a084',
+    tiles: ['Y', 'L', 'P', 'U'],
   },
   {
     __typename: 'Game',
@@ -50,20 +45,6 @@ const testGameData = [
   {
     __typename: 'Game',
     _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 2',
-    password: '',
-    color: '#ffcf58',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 2',
-    password: '',
-    color: '#6970fc',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
     name: 'Test Quiz 1',
     password: '',
     color: '#00a084',
@@ -71,79 +52,9 @@ const testGameData = [
   {
     __typename: 'Game',
     _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 2',
-    password: '',
-    color: '#ffcf58',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 2',
-    password: '',
-    color: '#6970fc',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
     name: 'Test Quiz 1',
     password: '',
     color: '#00a084',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 2',
-    password: '',
-    color: '#ffcf58',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 2',
-    password: '',
-    color: '#6970fc',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 1',
-    password: '',
-    color: '#00a084',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 2',
-    password: '',
-    color: '#ffcf58',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 2',
-    password: '',
-    color: '#6970fc',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 1',
-    password: '',
-    color: '#00a084',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 2',
-    password: '',
-    color: '#ffcf58',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 2',
-    password: '',
-    color: '#6970fc',
   },
 ];
 
@@ -178,6 +89,7 @@ const Dashboard = ({ session, games }) => {
                 key={g._id}
                 title={g.name}
                 color={g.color}
+                tiles={g.tiles}
               />
             ))}
           </div>

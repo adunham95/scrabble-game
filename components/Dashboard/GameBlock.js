@@ -1,5 +1,4 @@
 import React from 'react';
-import { getRandomInt } from '../../api/utilites/utilities';
 import styles from './gameblock.module.scss';
 
 function hexToRgb(hex) {
@@ -55,15 +54,26 @@ function shuffle(array) {
   return array;
 }
 
-const GameBlock = ({ title, color, rounds = 4 }) => {
+const GameBlock = ({
+  title, color, rounds = 4, tiles = [],
+}) => {
   const generateIcon = () => {
-    const defaultIcons = shuffle(['#A93226', '#7D3C98', '#27AE60 ', '#D68910', '#1F618D', '#566573']);
-
-    return defaultIcons.splice(getRandomInt(defaultIcons.length - 1)).map((t) => (
+    const defaultIcons = shuffle(tiles);
+    let array = tiles;
+    if (tiles.length > 6) {
+      array = defaultIcons.slice(0, 6);
+      array.push(tiles.length - 7);
+    }
+    if (tiles.length === 0) {
+      array.push(0);
+    }
+    return array.map((t) => (
       <span
         className={styles.gameBlockIcon}
-        style={{ background: t }}
-      />
+        // style={{ background: t }}
+      >
+        {t}
+      </span>
     ));
 
     // return defaultIcons;
@@ -72,7 +82,7 @@ const GameBlock = ({ title, color, rounds = 4 }) => {
   return (
     <div className={styles.gameBlockContainer}>
       <div className={styles.gameBlock}>
-        <div style={{ display: 'flex' }}>
+        <div className={styles.gameBlockIconContainer}>
           { generateIcon()}
         </div>
         <h2 className={styles.gameBlockTitle}>{title}</h2>
@@ -85,7 +95,9 @@ const GameBlock = ({ title, color, rounds = 4 }) => {
           </p>
           <p className={styles.gameBlockTask}>
             <span className={styles.gameBlockTaskIcon} />
-            Task: Task Name
+            Tiles:
+            {' '}
+            {tiles.length}
           </p>
         </div>
         <div>
