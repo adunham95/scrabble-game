@@ -28,9 +28,7 @@ export async function getGame(id, context) {
 
 export async function getGamesByAdmin(adminID) {
   const { db } = await connectToDatabase();
-  console.log(adminID);
   const game = await db.collection(collections.game).find({ adminID }).toArray();
-  console.log(game);
   return game;
 }
 
