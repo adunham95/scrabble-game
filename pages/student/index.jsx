@@ -9,16 +9,13 @@ import { Message } from '../../components/Text/Message';
 
 const avatars = ['dog', 'cat', 'dragon', 'elephant', 'horse', 'squirrel', 'turtle', 'unicorn', 'whale'];
 const colors = [
-  { name: 'Dark Red', color: '#A60C31' },
   { name: 'Red', color: '#f44336' },
   { name: 'Pink', color: '#E91E63' },
   { name: 'Purple', color: '#673ab7' },
   { name: 'Blue', color: '#0085ca' },
   { name: 'Teal', color: '#00796B' },
   { name: 'Green', color: '#009688' },
-  { name: 'Lime', color: '#cddc39' },
   { name: 'Yellow', color: '#f1dd2f' },
-  { name: 'Amber', color: '#ffc107' },
   { name: 'Orange', color: '#FF8201' },
   { name: 'Brown', color: '#5D4037' },
   { name: 'Smokey', color: '#58595C' },
