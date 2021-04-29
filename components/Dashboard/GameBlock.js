@@ -58,10 +58,10 @@ const GameBlock = ({
   title, rounds = 4, tiles = [], onEdit = () => {},
 }) => {
   const generateIcon = () => {
-    const defaultIcons = shuffle(tiles);
+    // const defaultIcons = shuffle(tiles);
     let array = [...tiles];
     if (tiles.length > 6) {
-      array = defaultIcons.slice(0, 6);
+      array = tiles.slice(0, 6);
       array.push(tiles.length - 7);
     }
     if (tiles.length === 0) {
@@ -121,7 +121,7 @@ const NewGameBlock = ({ onClick = () => {} }) => (
   <div className={styles.gameBlockContainer}>
     <div className={styles.gameBlock}>
       <h1>New Game</h1>
-      <button>Create New Game</button>
+      <button onClick={onClick}>Create New Game</button>
     </div>
   </div>
 );
