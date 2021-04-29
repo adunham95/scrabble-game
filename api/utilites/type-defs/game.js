@@ -8,6 +8,7 @@ type Game {
     adminID: String
     password: String
     settings: GameSettings
+    color: String
 }
 
 type GameSettings{
@@ -28,6 +29,7 @@ input GameInput {
     adminID: String!
     name: String
     rounds: Int
+    color: String
     tiles: [GroupTileInput]
 }
 
