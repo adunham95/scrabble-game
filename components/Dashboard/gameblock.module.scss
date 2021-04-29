@@ -1,3 +1,5 @@
+@import "../../utilities/style/vars";
+
 .gameBlock{
     padding: 20px 20px 10px;
     margin: 5px;
@@ -21,7 +23,7 @@
         border: 2px solid white;
         height: 1em;
         width: 1em;
-        background: rgba(#846a42, 0.9);
+        background: rgba($tileColor, 0.9);
         border-radius: 5px;
         display: flex;
         justify-content: center;
@@ -36,7 +38,7 @@
             &:hover{
                 .gameBlockIcon{
                     margin: 0;
-                    background: rgba(#846a42, 1);
+                    background: rgba($tileColor, 1);
                 }
             }
         }
