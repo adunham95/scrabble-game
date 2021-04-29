@@ -55,11 +55,11 @@ function shuffle(array) {
 }
 
 const GameBlock = ({
-  title, color, rounds = 4, tiles = [],
+  title, rounds = 4, tiles = [], onEdit = () => {},
 }) => {
   const generateIcon = () => {
     const defaultIcons = shuffle(tiles);
-    let array = tiles;
+    let array = [...tiles];
     if (tiles.length > 6) {
       array = defaultIcons.slice(0, 6);
       array.push(tiles.length - 7);
@@ -104,7 +104,12 @@ const GameBlock = ({
           <div />
         </div>
         <div className={styles.gameBlockAction}>
-          <button className={styles.gameBlockActionButton}>Edit</button>
+          <button
+            className={styles.gameBlockActionButton}
+            onClick={onEdit}
+          >
+            Edit
+          </button>
           <button className={styles.gameBlockActionButton}>Play</button>
         </div>
       </div>
