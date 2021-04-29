@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server-micro';
 import Cookies from 'cookies';
 import jwt from 'jsonwebtoken';
-import typeDefs from '../../api/utilites/schemas';
+import typeDefs from '../../api/utilites/type-defs';
 import { resolvers } from '../../api/utilites/resolvers';
 
 const verifyToken = (token) => {
