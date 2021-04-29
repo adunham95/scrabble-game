@@ -6,6 +6,9 @@ import {
 import { gql } from '@apollo/client';
 import { initializeApollo } from '../../utilities/apollo_client/client';
 import GameBlock, { NewGameBlock } from '../../components/Dashboard/GameBlock';
+import { ToggleContent } from '../../components/Modal/modal';
+import { FormModal } from '../../components/Form/FormModal';
+import GameForm from '../../components/Dashboard/GameEditor';
 
 const FetchGamesQuery = gql`
   query($adminID:String!){
@@ -29,7 +32,7 @@ const testGameData = [
   },
   {
     __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
+    _id: '6089455e91100139f4d52c50',
     name: 'Test Quiz 1',
     password: '',
     color: '#00a084',
@@ -37,21 +40,21 @@ const testGameData = [
   },
   {
     __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
+    _id: '6089455e91100139f4d52c51',
     name: 'Test Quiz 1',
     password: '',
     color: '#00a084',
   },
   {
     __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
+    _id: '6089455e91100139f4d52c52',
     name: 'Test Quiz 1',
     password: '',
     color: '#00a084',
   },
   {
     __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
+    _id: '6089455e91100139f4d52c53',
     name: 'Test Quiz 1',
     password: '',
     color: '#00a084',
@@ -59,7 +62,7 @@ const testGameData = [
 ];
 
 const Dashboard = ({ session, games }) => {
-  const [data, setStat] = useState('');
+  const [modalID, setModalID] = useState('');
 
   // console.log(session);
 
@@ -83,16 +86,31 @@ const Dashboard = ({ session, games }) => {
           <br />
           <button onClick={signOut}>Sign out</button>
           <div style={{ display: 'flex', flexWrap: 'wrap', background: '#e8e8e8' }}>
-            <NewGameBlock />
+            <NewGameBlock onClick={() => setModalID('new')} />
             {testGameData.map((g) => (
               <GameBlock
                 key={g._id}
                 title={g.name}
                 color={g.color}
                 tiles={g.tiles}
+                onEdit={() => setModalID(g._id)}
               />
             ))}
           </div>
+          <ToggleContent
+            isOpen={modalID !== ''}
+            toggle={(show) => <></>}
+            content={(hide) => (
+              <FormModal close={() => { setModalID(''); hide(); }}>
+                <GameForm onCancel={() => { setModalID(''); hide(); }} />
+                {/* {
+                  modalID === 'new' ? <h1>New</h1> : <h1>Update</h1>
+                }
+
+                <button onClick={() => { setModalID(''); hide(); }}>Close</button> */}
+              </FormModal>
+            )}
+          />
         </>
       )}
     </>
