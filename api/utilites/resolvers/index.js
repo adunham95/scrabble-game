@@ -1,35 +1,12 @@
 import { loginAdmin, setAdmin } from './admin';
-import { getGame, loginGame, setGame } from './game';
+import {
+  getGame, getGamesByAdmin, loginGame, setGame,
+} from './game';
 
 export const resolvers = {
   Query: {
     getGame: async (_, args, context) => getGame(args.id, context),
-    // getAdmin: async () => {
-    //   try {
-    //     const users = [
-    //       { id: 1, login: 'test user' },
-    //       { id: 2, login: 'test user number 2' },
-    //     ];
-    //     return users.map(({ id, login }) => ({
-    //       id,
-    //       login,
-    //     }));
-    //   } catch (error) {
-    //     throw error;
-    //   }
-    // },
-    // getUser: async (_, args) => {
-    //   try {
-    //     const user = { id: 1, login: 'test user' };
-    //     return {
-    //       id: user.id,
-    //       login: user.login,
-    //       avatar_url: user.avatar_url,
-    //     };
-    //   } catch (error) {
-    //     throw error;
-    //   }
-    // },
+    getGamesByAdmin: async (_, args, context) => getGamesByAdmin(args.adminID),
   },
   Mutation: {
     createAdmin: async (_parent, _args, context, info) => setAdmin(_args, context),

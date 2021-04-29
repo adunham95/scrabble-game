@@ -1,7 +1,21 @@
 import { UserInputError } from 'apollo-server-errors';
 import { ObjectId } from 'bson';
 import { connectToDatabase, collections } from '../mongodb';
-import { capitalize, hashPassword, makeID } from '../utilities';
+import { capitalize, makeID } from '../utilities';
+
+// Utility to generate unique passwords for the games
+async function generatePassword(db) {
+  const password = makeID(6);
+
+  const previousPassword = await db.collection(collections.game).find({ password }).toArray();
+
+  if (previousPassword.length > 0) {
+    generatePassword();
+  }
+
+  console.log('password', password);
+  return password;
+}
 
 export async function getGame(id, context) {
   // console.log(context);
@@ -12,10 +26,18 @@ export async function getGame(id, context) {
   return game;
 }
 
+export async function getGamesByAdmin(adminID) {
+  const { db } = await connectToDatabase();
+  console.log(adminID);
+  const game = await db.collection(collections.game).find({ adminID }).toArray();
+  console.log(game);
+  return game;
+}
+
 export async function setGame(data, context) {
   const { db } = await connectToDatabase();
   const defaultGame = {
-    users: [], adminID: '', ...data.input,
+    users: [], adminID: '', rounds: 0, tiles: [], ...data.input,
   };
 
   if (defaultGame.adminID < 1 || defaultGame.adminID === '') {
@@ -25,25 +47,16 @@ export async function setGame(data, context) {
     throw new UserInputError('No Game name Specified');
   }
 
-  async function generatePassword() {
-    const password = makeID(6);
-
-    const previousPassword = await db.collection(collections.game).find({ password }).toArray();
-
-    if (previousPassword.length > 0) {
-      generatePassword();
-    }
-
-    console.log('password', password);
-    return password;
-  }
-
   const newGame = {
-    ...defaultGame,
+    users: [],
     createdAt: Date.now(),
-    password: await generatePassword(),
+    password: '',
     adminID: defaultGame.adminID,
     active: true,
+    settings: {
+      rounds: defaultGame.rounds,
+      tiles: defaultGame.tiles,
+    },
   };
 
   const newGameData = await db.collection(collections.game).insertOne(newGame).then(({ ops }) => ops[0]);

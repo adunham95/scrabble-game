@@ -5,7 +5,7 @@ import typeDefs from '../../api/utilites/schemas';
 import { resolvers } from '../../api/utilites/resolvers';
 
 const verifyToken = (token) => {
-  console.log('token', token);
+  // console.log('token', token);
   if (!token) return null;
   try {
     return jwt.verify(token, 'secret');

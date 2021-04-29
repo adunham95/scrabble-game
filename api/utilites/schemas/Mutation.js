@@ -11,7 +11,7 @@ export const typeDefs = gql`
         updateGame(id: ID, input: GameInput): Game
         loginGame(password: String!, user:StudentInput!): GameLogin
 
-        createTile(input: TileInput): Tile
+        createTile(input: SingleTileInput): Tile
 
         createStudent(input: StudentInput): Student
         # updateStudent(id: ID!, input: StudentInput): Student

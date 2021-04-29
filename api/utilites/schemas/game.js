@@ -4,20 +4,22 @@ export const typeDefs = gql`
 type Game {
     _id: ID!
     name: String
-    tiles: [Tile]
     users: [Student]
-    admin: Admin!
-    password: String!
-    active: Boolean
+    adminID: String
+    password: String
+    settings: GameSettings
+}
+
+type GameSettings{
+    rounds: Int
+    tiles: [Tile]
 }
 
 type GameLogin {
     _id: ID!
     name: String
     tiles: [Tile]
-    admin: Admin!
     password: String!
-    active: Boolean
     userID: ID!
 }
 
@@ -25,18 +27,26 @@ input GameInput {
     users: [String]
     adminID: String!
     name: String
+    rounds: Int
+    tiles: [GroupTileInput]
 }
 
 type Tile {
-    id: ID!
     pointValue: Int
     letter: String!
-    game: Game
+    weight: Int
 }
 
-input TileInput {
+input SingleTileInput {
     pointValue: Int
     letter: String!
     gameID: ID
+    weight: Int
+}
+
+input GroupTileInput {
+    pointValue: Int
+    letter: String!
+    weight: Int
 }
 `;

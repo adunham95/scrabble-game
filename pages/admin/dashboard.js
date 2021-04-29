@@ -5,14 +5,14 @@ import {
 } from 'next-auth/client';
 import { initializeApollo } from '../../utilities/apollo_client/client';
 
-const Dashboard = () => {
+const Dashboard = ({ session }) => {
   const [data, setStat] = useState('');
-  const [session, loading] = useSession();
+  // const [session, loading] = useSession();
   const router = useRouter();
   //   console.log(router.query);
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  // if (loading) {
+  //   return <p>Loading...</p>;
+  // }
 
   // console.log(session);
 
