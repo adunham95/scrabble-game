@@ -33,11 +33,12 @@ const options = {
         const adminAccountInfo = await db.collection(collections.admin).findOne({ email: credentials.email });
         const match = await validatePassword(adminAccountInfo.hash, adminAccountInfo.salt, credentials.password);
         console.log(match);
+
+        delete adminAccountInfo.hash;
+        delete adminAccountInfo.slat;
+
         if (match) {
-          return {
-            _id: adminAccountInfo._id,
-            email: adminAccountInfo.email,
-          };
+          return adminAccountInfo;
         }
         return null;
       },

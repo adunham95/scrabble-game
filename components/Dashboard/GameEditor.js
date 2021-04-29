@@ -4,24 +4,24 @@ import { FormButton } from '../Form/FormButton';
 import { FormInput } from '../Form/FormInput';
 import { FormHeader } from '../Form/FormText';
 
-const tileDefault = {
-  _id: '', name: '', points: 0,
+const projectDefault = {
+  _id: '', name: '', adminID: '', tiles: [], rounds: 0,
 };
 
 const GameForm = ({
-  tile = tileDefault, onSubmit = () => {}, onCancel = () => {},
+  project, onSubmit = () => {}, onCancel = () => {},
 }) => {
-  const [tileData, setTileData] = useState(tileDefault);
+  const [projectData, setProjectData] = useState(projectDefault);
 
   useEffect(() => {
-    console.log('tile', tile);
-    setTileData({ ...tileDefault, ...tile });
-  }, [tile]);
+    console.log('project', project);
+    setProjectData({ ...projectDefault, ...project });
+  }, [project]);
 
-  const updateTile = (value, field) => {
-    const updatedTileData = { ...tileData };
+  const updateProject = (value, field) => {
+    const updatedTileData = { ...projectData };
     updatedTileData[field] = value;
-    setTileData(updatedTileData);
+    setProjectData(updatedTileData);
   };
 
   const submit = async () => {
@@ -30,7 +30,7 @@ const GameForm = ({
 
     // await client.resetStore();
 
-    if (tileData.id === '') {
+    if (projectData.id === '') {
       console.log('Create Tag');
     }
     console.log('Update Tag');
@@ -40,12 +40,12 @@ const GameForm = ({
     <Form onSubmit={submit}>
       <FormHeader title="Game" />
       <FormInput
-        onChange={(t) => updateTile(t, 'name')}
-        value={tileData.name}
+        onChange={(t) => updateProject(t, 'name')}
+        value={projectData.name}
       />
       <FormInput
-        onChange={(t) => updateTile(t, 'points')}
-        value={tileData.points}
+        onChange={(t) => updateProject(t, 'points')}
+        value={projectData.points}
       />
       <FormButton
         type="button"

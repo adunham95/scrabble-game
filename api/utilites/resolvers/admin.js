@@ -1,4 +1,5 @@
 import { UserInputError } from 'apollo-server-errors';
+import { ObjectId } from 'bson';
 import jwt from 'jsonwebtoken';
 import { connectToDatabase, collections } from '../mongodb';
 import { hashPassword, validatePassword } from '../utilities';
@@ -26,6 +27,18 @@ export async function setAdmin({ admin }, context) {
   const newAdmin = await db.collection(collections.admin).insertOne(adminUser).then(({ ops }) => ops[0]);
 
   return newAdmin;
+}
+
+export async function getAdmin(id) {
+  const { db } = await connectToDatabase();
+  const admin = await db.collection(collections.admin).findOne({ _id: new ObjectId(id) });
+
+  delete admin.hash;
+  delete admin.salt;
+
+  console.log(admin);
+
+  return admin;
 }
 
 export async function loginAdmin({ admin }, context) {
