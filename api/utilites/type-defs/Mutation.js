@@ -8,7 +8,7 @@ export const typeDefs = gql`
         loginAdmin(admin: AdminInput): Admin
 
         createGame(input: GameInput): Game
-        updateGame(id: ID, input: GameInput): Game
+        updateGame(id: ID, game: GameInput): Game
         loginGame(password: String!, user:StudentInput!): GameLogin
 
         createTile(input: SingleTileInput): Tile
