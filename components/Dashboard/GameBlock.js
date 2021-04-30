@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../Icons/Icon';
 import styles from './gameblock.module.scss';
 
 function hexToRgb(hex) {
@@ -60,15 +61,17 @@ const GameBlock = ({
   const generateIcon = () => {
     // const defaultIcons = shuffle(tiles);
     let array = [...tiles];
+    console.log(array);
     if (tiles.length > 6) {
       array = tiles.slice(0, 6);
-      array.push({ letter: tiles.length - 7 });
+      array.push({ letter: tiles.length - 7, _id: '' });
     }
     if (tiles.length === 0) {
-      array.push({ letter: '0' });
+      array.push({ letter: '0', _id: '' });
     }
     return array.map((t) => (
       <span
+        key={t._id}
         className={styles.gameBlockIcon}
         // style={{ background: t }}
       >
@@ -87,18 +90,20 @@ const GameBlock = ({
         </div>
         <h2 className={styles.gameBlockTitle}>{title}</h2>
         <div>
-          <p className={styles.gameBlockTask}>
+          {/* <p className={styles.gameBlockTask}>
             <span className={styles.gameBlockTaskIcon} />
             Rounds:
             {' '}
             {rounds}
-          </p>
-          <p className={styles.gameBlockTask}>
-            <span className={styles.gameBlockTaskIcon} />
+          </p> */}
+          <div className={styles.gameBlockTask}>
+            <span className={styles.gameBlockTaskIcon}>
+              <Icon name="tile" />
+            </span>
             Tiles:
             {' '}
             {tiles.length}
-          </p>
+          </div>
         </div>
         <div>
           <div />
