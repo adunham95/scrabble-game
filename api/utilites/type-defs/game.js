@@ -8,7 +8,6 @@ type Game {
     adminID: String
     password: String
     settings: GameSettings
-    color: String
 }
 
 type GameSettings{

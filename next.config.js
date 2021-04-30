@@ -6,11 +6,11 @@ module.exports = {
 
   async redirects() {
     return [
-      {
-        source: '/admin/login',
-        destination: '/api/auth/signin',
-        permanent: false,
-      },
+      // {
+      //   source: '/admin/login',
+      //   destination: '/api/auth/signin',
+      //   permanent: false,
+      // },
     ];
   },
 };

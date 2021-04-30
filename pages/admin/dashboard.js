@@ -28,7 +28,30 @@ const testGameData = [
     name: 'Test Quiz 1',
     password: '',
     color: '#00a084',
-    tiles: ['A', 'B', 'C', 'X', 'Y', 'Q'],
+    tiles: [{
+      _id: '0001', letter: 'A', point: 1, weight: 9,
+    }, {
+      _id: '002', letter: 'B', point: 3, weight: 2,
+    }, {
+      _id: '003', letter: 'C', point: 3, weight: 2,
+    }, {
+      _id: '004', letter: 'X', point: 8, weight: 1,
+    }, {
+      _id: '005', letter: 'Y', point: 4, weight: 2,
+    }, {
+      _id: '006', letter: 'Q', point: 10, weight: 1,
+    }, {
+      _id: '007', letter: 'S', point: 10, weight: 1,
+    }, {
+      _id: '008', letter: 'T', point: 10, weight: 1,
+    }, {
+      _id: '009', letter: 'V', point: 10, weight: 1,
+    }, {
+      _id: '010', letter: 'H', point: 10, weight: 1,
+    }, {
+      _id: '011', letter: 'M', point: 10, weight: 1,
+    }],
+    rounds: 12,
   },
   {
     __typename: 'Game',
@@ -36,7 +59,15 @@ const testGameData = [
     name: 'Test Quiz 1',
     password: '',
     color: '#00a084',
-    tiles: ['Y', 'L', 'P', 'U'],
+    tiles: [{
+      _id: '05', letter: 'Y', point: 4, weight: 2,
+    }, {
+      _id: '01', letter: 'L', point: 1, weight: 4,
+    }, {
+      _id: '02', letter: 'P', point: 3, weight: 2,
+    }, {
+      _id: '03', letter: 'U', point: 1, weight: 4,
+    }],
   },
   {
     __typename: 'Game',
@@ -64,7 +95,11 @@ const testGameData = [
 const Dashboard = ({ session, games }) => {
   const [modalID, setModalID] = useState('');
 
-  // console.log(session);
+  console.log(session);
+
+  const saveGame = (project) => {
+    console.log('saveGame', project);
+  };
 
   return (
     <>
@@ -78,13 +113,12 @@ const Dashboard = ({ session, games }) => {
       )}
       {session && (
         <>
-          Signed in as
-          {' '}
-          {session.user.email}
-          {' '}
-          {session.user._id}
-          <br />
           <button onClick={signOut}>Sign out</button>
+          <h1 style={{ padding: '20px' }}>
+            Hello
+            {' '}
+            {session.user.firstName}
+          </h1>
           <div style={{ display: 'flex', flexWrap: 'wrap', background: '#e8e8e8' }}>
             <NewGameBlock onClick={() => setModalID('new')} />
             {testGameData.map((g) => (
@@ -102,12 +136,11 @@ const Dashboard = ({ session, games }) => {
             toggle={(show) => <></>}
             content={(hide) => (
               <FormModal close={() => { setModalID(''); hide(); }}>
-                <GameForm onCancel={() => { setModalID(''); hide(); }} />
-                {/* {
-                  modalID === 'new' ? <h1>New</h1> : <h1>Update</h1>
-                }
-
-                <button onClick={() => { setModalID(''); hide(); }}>Close</button> */}
+                <GameForm
+                  project={testGameData.filter((p) => p._id === modalID)[0]}
+                  onCancel={() => { setModalID(''); hide(); }}
+                  onSubmit={(g) => saveGame(g)}
+                />
               </FormModal>
             )}
           />

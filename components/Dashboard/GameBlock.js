@@ -62,17 +62,17 @@ const GameBlock = ({
     let array = [...tiles];
     if (tiles.length > 6) {
       array = tiles.slice(0, 6);
-      array.push(tiles.length - 7);
+      array.push({ letter: tiles.length - 7 });
     }
     if (tiles.length === 0) {
-      array.push(0);
+      array.push({ letter: '0' });
     }
     return array.map((t) => (
       <span
         className={styles.gameBlockIcon}
         // style={{ background: t }}
       >
-        {t}
+        {t.letter}
       </span>
     ));
 

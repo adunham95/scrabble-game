@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FormLabel, FormSubText } from './FormText';
 
 export const FormInput = ({
-  id = '', placeholder = '', value = '', onChange, label = '', required = false, subtext = '', type = 'text',
+  id = '', placeholder = '', value = '', onChange = '', label = '', required = false, subtext = '', type = 'text',
 }) => {
   const [content, setContent] = useState('');
 
@@ -12,9 +12,7 @@ export const FormInput = ({
     }
   }, [value]);
 
-  useEffect(() => {
-    onChange(content);
-  }, [content]);
+  const change = (e) => (onChange === '' ? setContent(e.target.value) : onChange(e.target.value));
 
   return (
     <div className="grid grid-cols-3 gap-6">
@@ -46,7 +44,7 @@ export const FormInput = ({
             id={id}
             className="form-input border border-gray-300 w-full focus:border-indigo-500"
             placeholder={placeholder}
-            onChange={(e) => setContent(e.target.value)}
+            onChange={change}
             value={content}
           />
         </div>
