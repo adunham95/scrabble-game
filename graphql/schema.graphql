@@ -24,12 +24,12 @@ input AdminInput {
 
 type Tile {
     id: ID!
-    pointValue: Int
+    point: Int
     letter: String!
 }
 
 input TileInput {
-    pointValue: Int
+    point: Int
     letter: String!
 }
 

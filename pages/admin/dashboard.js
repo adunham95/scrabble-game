@@ -14,91 +14,31 @@ const FetchGamesQuery = gql`
   query($adminID:String!){
     getGamesByAdmin(adminID:$adminID){
       _id
-      adminID
-      name
-      password
+    adminID
+    name
+    password
+    tiles{
+      _id
+      point
+      letter
+      weight
     }
   }
+}
 `;
 
-const testGameData = [
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c49',
-    name: 'Test Quiz 1',
-    password: '',
-    color: '#00a084',
-    tiles: [{
-      _id: '0001', letter: 'A', point: 1, weight: 9,
-    }, {
-      _id: '002', letter: 'B', point: 3, weight: 2,
-    }, {
-      _id: '003', letter: 'C', point: 3, weight: 2,
-    }, {
-      _id: '004', letter: 'X', point: 8, weight: 1,
-    }, {
-      _id: '005', letter: 'Y', point: 4, weight: 2,
-    }, {
-      _id: '006', letter: 'Q', point: 10, weight: 1,
-    }, {
-      _id: '007', letter: 'S', point: 10, weight: 1,
-    }, {
-      _id: '008', letter: 'T', point: 10, weight: 1,
-    }, {
-      _id: '009', letter: 'V', point: 10, weight: 1,
-    }, {
-      _id: '010', letter: 'H', point: 10, weight: 1,
-    }, {
-      _id: '011', letter: 'M', point: 10, weight: 1,
-    }],
-    rounds: 12,
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c50',
-    name: 'Test Quiz 1',
-    password: '',
-    color: '#00a084',
-    tiles: [{
-      _id: '05', letter: 'Y', point: 4, weight: 2,
-    }, {
-      _id: '01', letter: 'L', point: 1, weight: 4,
-    }, {
-      _id: '02', letter: 'P', point: 3, weight: 2,
-    }, {
-      _id: '03', letter: 'U', point: 1, weight: 4,
-    }],
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c51',
-    name: 'Test Quiz 1',
-    password: '',
-    color: '#00a084',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c52',
-    name: 'Test Quiz 1',
-    password: '',
-    color: '#00a084',
-  },
-  {
-    __typename: 'Game',
-    _id: '6089455e91100139f4d52c53',
-    name: 'Test Quiz 1',
-    password: '',
-    color: '#00a084',
-  },
-];
-
-const Dashboard = ({ session, games }) => {
+const Dashboard = ({ session, games = [] }) => {
   const [modalID, setModalID] = useState('');
+  const [gameSet, setGameSet] = useState(games);
 
+  console.log('games', games);
   console.log(session);
 
   const saveGame = (project) => {
     console.log('saveGame', project);
+    const allGames = [...gameSet, project];
+    setGameSet(allGames);
+    setModalID('');
   };
 
   return (
@@ -121,7 +61,7 @@ const Dashboard = ({ session, games }) => {
           </h1>
           <div style={{ display: 'flex', flexWrap: 'wrap', background: '#e8e8e8' }}>
             <NewGameBlock onClick={() => setModalID('new')} />
-            {testGameData.map((g) => (
+            {gameSet.map((g) => (
               <GameBlock
                 key={g._id}
                 title={g.name}
@@ -137,7 +77,8 @@ const Dashboard = ({ session, games }) => {
             content={(hide) => (
               <FormModal close={() => { setModalID(''); hide(); }}>
                 <GameForm
-                  project={testGameData.filter((p) => p._id === modalID)[0]}
+                  adminID={session.user._id}
+                  project={games.filter((p) => p._id === modalID)[0]}
                   onCancel={() => { setModalID(''); hide(); }}
                   onSubmit={(g) => saveGame(g)}
                 />

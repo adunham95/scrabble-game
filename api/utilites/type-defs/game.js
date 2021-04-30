@@ -7,7 +7,8 @@ type Game {
     users: [Student]
     adminID: String
     password: String
-    settings: GameSettings
+    rounds: Int
+    tiles: [Tile]
 }
 
 type GameSettings{
@@ -33,20 +34,23 @@ input GameInput {
 }
 
 type Tile {
-    pointValue: Int
+    _id: String!
+    point: Int
     letter: String!
     weight: Int
 }
 
 input SingleTileInput {
-    pointValue: Int
+    _id: String
+    point: Int
     letter: String!
     gameID: ID
     weight: Int
 }
 
 input GroupTileInput {
-    pointValue: Int
+    _id: String
+    point: Int
     letter: String!
     weight: Int
 }

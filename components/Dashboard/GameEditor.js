@@ -1,4 +1,6 @@
+import { gql, useApolloClient, useMutation } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
+import { getApolloMessage } from '../../utilities/apollo_client/client';
 import { generateID } from '../../utilities/utils';
 import Form from '../Form/Form';
 import { FormButton } from '../Form/FormButton';
@@ -91,10 +93,30 @@ const projectDefault = {
   _id: '', name: '', adminID: '', tiles: fullAlphabet, rounds: 0,
 };
 
+const CreateGameMutation = gql`
+mutation($input:GameInput){
+  createGame(input:$input){
+    _id
+  }
+}
+`;
+
+const UpdateGameMutation = gql`
+mutation($input:GameInput){
+  createGame(input:$input){
+    _id
+  }
+}
+`;
+
 const GameForm = ({
-  project, onSubmit = () => {}, onCancel = () => {},
+  project, onSubmit = () => {}, onCancel = () => {}, adminID = '',
 }) => {
+  const client = useApolloClient();
+  const [createGame] = useMutation(CreateGameMutation);
   const [projectData, setProjectData] = useState(projectDefault);
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState({ type: '', message: '' });
   const [newTile, setNewTile] = useState({
     _id: '', letter: '', point: 0, weight: 1,
   });
@@ -116,29 +138,24 @@ const GameForm = ({
     setNewTile(updatedNewTileData);
   };
 
-  const addTiles = (tileArray) => {
-    const updatedProjectData = { ...projectData };
-    updatedProjectData.tiles = tileArray.map((t) => {
-      const newT = { ...t };
-      newT._id = generateID(4);
-      return newT;
-    });
-    setProjectData(updatedProjectData);
-  };
-
   const updateTile = () => {
     const updatedProjectData = { ...projectData };
     const tileIndex = updatedProjectData.tiles.findIndex((t) => t._id === newTile._id);
+    console.log('tileIndex', tileIndex);
     if (tileIndex > -1) {
       updatedProjectData.tiles[tileIndex] = { ...newTile };
-      setProjectData(updatedProjectData);
-      return;
     }
-    // If Tile does not exist add tile
-    if (newTile.letter === '') { return; }
-    const createTile = { ...newTile, _id: generateID(4) };
-    updatedProjectData.tiles.push(createTile);
+    if (tileIndex <= -1) {
+      console.log('Add tile');
+      // If Tile does not exist add tile
+      if (newTile.letter === '') { return; }
+      const createTile = { ...newTile, _id: generateID(4) };
+      updatedProjectData.tiles.push(createTile);
+    }
     setProjectData(updatedProjectData);
+    setNewTile({
+      _id: '', letter: '', point: 0, weight: 1,
+    });
   };
 
   const removeTile = () => {
@@ -147,9 +164,30 @@ const GameForm = ({
     setProjectData(updatedProjectData);
   };
 
-  const submit = () => {
-    console.log('submitting');
-    onSubmit(projectData);
+  const submit = async () => {
+    const input = {
+      adminID,
+      name: projectData.name,
+      rounds: 0,
+      tiles: projectData.tiles.map((t) => ({ ...t })),
+    };
+    console.log('submitting', input);
+    try {
+      await client.resetStore();
+      const { data } = await createGame({
+        variables: {
+          input,
+        },
+      });
+      console.log(data);
+      setIsLoading(false);
+      setMessage({ type: 'success', message: 'Logging In' });
+      onSubmit({ ...projectData, _id: data.createGame._id });
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setMessage({ type: 'error', message: getApolloMessage(error) });
+    }
   };
 
   return (
@@ -163,12 +201,12 @@ const GameForm = ({
         onChange={(t) => updateProject(t, 'name')}
         value={projectData.name}
       />
-      <FormInput
+      {/* <FormInput
         placeholder="Rounds"
         type="Number"
         onChange={(t) => updateProject(t, 'rounds')}
         value={projectData.rounds}
-      />
+      /> */}
 
       <div>
         <div className={styles.tileContainer}>
@@ -178,7 +216,7 @@ const GameForm = ({
               className={styles.tile}
             >
               <button
-                aria-label="Remove Tile"
+                aria-label="Edit Tile"
                 type="button"
                 className={styles.tileRemove}
                 onClick={() => setNewTile(t)}
@@ -190,6 +228,21 @@ const GameForm = ({
               <span className={styles.tileScore}>{t.point}</span>
             </span>
           ))}
+          <span
+            className={styles.tile}
+          >
+            <button
+              aria-label="Add Tile"
+              type="button"
+              className={styles.tileRemove}
+              onClick={() => setNewTile({
+                _id: 'new', letter: 'A', weight: '1', point: '1',
+              })}
+            >
+              Edit
+            </button>
+            +
+          </span>
         </div>
         <FormInput
           placeholder="A"
@@ -211,7 +264,9 @@ const GameForm = ({
           type="button"
           onClick={updateTile}
         >
-          Update Tile
+          {newTile._id === 'new' ? 'Add' : 'Update'}
+          {' '}
+          Tile
         </FormButton>
         <FormButton
           type="button"

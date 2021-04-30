@@ -50,14 +50,39 @@ export async function setGame(data, context) {
     createdAt: Date.now(),
     password: '',
     adminID: defaultGame.adminID,
+    name: defaultGame.name,
     active: true,
-    settings: {
-      rounds: defaultGame.rounds,
-      tiles: defaultGame.tiles,
-    },
+    rounds: defaultGame.rounds,
+    tiles: defaultGame.tiles,
   };
 
   const newGameData = await db.collection(collections.game).insertOne(newGame).then(({ ops }) => ops[0]);
+
+  console.log(newGameData);
+
+  return newGameData;
+}
+
+export async function updateGame(id, data) {
+  const { db } = await connectToDatabase();
+
+  // TODO validate admin ids. So only the admin can update there own content
+
+  const newGame = {
+    updatedAt: Date.now(),
+    ...data,
+  };
+
+  // Remove the adminID so it cant be switched to another user
+  delete newGame.adminID;
+
+  const newGameData = await db
+    .collection(collections.game)
+    .findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: newGame },
+      { returnOriginal: false },
+    ).then(({ value }) => value);
 
   console.log(newGameData);
 
