@@ -1,4 +1,5 @@
 import React from 'react';
+import { generateID } from '../../utilities/utils';
 import { Icon } from '../Icons/Icon';
 import styles from './gameblock.module.scss';
 
@@ -61,14 +62,15 @@ const GameBlock = ({
   const generateIcon = () => {
     // const defaultIcons = shuffle(tiles);
     let array = [...tiles];
-    console.log(array);
+    array = shuffle(array);
     if (tiles.length > 6) {
-      array = tiles.slice(0, 6);
-      array.push({ letter: tiles.length - 7, _id: '' });
+      array = array.slice(0, 6);
+      array.push({ letter: tiles.length - 7, _id: generateID(4) });
     }
     if (tiles.length === 0) {
-      array.push({ letter: '0', _id: '' });
+      array.push({ letter: '0', _id: generateID(4) });
     }
+
     return array.map((t) => (
       <span
         key={t._id}

@@ -93,6 +93,10 @@ const projectDefault = {
   _id: '', name: '', adminID: '', tiles: fullAlphabet, rounds: 0,
 };
 
+const tileDefault = {
+  _id: 'new', letter: '', point: '', weight: '',
+};
+
 const CreateGameMutation = gql`
 mutation($input:GameInput){
   createGame(input:$input){
@@ -119,9 +123,7 @@ const GameForm = ({
   const [projectData, setProjectData] = useState(projectDefault);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', message: '' });
-  const [newTile, setNewTile] = useState({
-    _id: '', letter: '', point: 0, weight: 1,
-  });
+  const [newTile, setNewTile] = useState(tileDefault);
 
   useEffect(() => {
     console.log('project', project);
@@ -155,15 +157,14 @@ const GameForm = ({
       updatedProjectData.tiles.push(createTile);
     }
     setProjectData(updatedProjectData);
-    setNewTile({
-      _id: '', letter: '', point: 0, weight: 1,
-    });
+    setNewTile(tileDefault);
   };
 
   const removeTile = () => {
     const updatedProjectData = { ...projectData };
     updatedProjectData.tiles = updatedProjectData.tiles.filter((t) => t._id !== newTile._id);
     setProjectData(updatedProjectData);
+    setNewTile(tileDefault);
   };
 
   const submit = async () => {
@@ -266,12 +267,13 @@ const GameForm = ({
           value={newTile.letter}
         />
         <FormInput
-          placeholder="10"
+          placeholder="6"
           type="Number"
           onChange={(t) => updateNewTile(t, 'point')}
           value={newTile.point}
         />
         <FormInput
+          placeholder="1"
           type="Number"
           onChange={(t) => updateNewTile(t, 'weight')}
           value={newTile.weight}
