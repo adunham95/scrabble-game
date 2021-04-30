@@ -102,9 +102,10 @@ mutation($input:GameInput){
 `;
 
 const UpdateGameMutation = gql`
-mutation($input:GameInput){
-  createGame(input:$input){
+mutation($id:ID!,$game:GameInput){
+  updateGame(id:$id,game:$game){
     _id
+    name
   }
 }
 `;
@@ -114,6 +115,7 @@ const GameForm = ({
 }) => {
   const client = useApolloClient();
   const [createGame] = useMutation(CreateGameMutation);
+  const [updateGame] = useMutation(UpdateGameMutation);
   const [projectData, setProjectData] = useState(projectDefault);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', message: '' });
@@ -165,6 +167,7 @@ const GameForm = ({
   };
 
   const submit = async () => {
+    const returnData = { ...projectData };
     const input = {
       adminID,
       name: projectData.name,
@@ -174,15 +177,28 @@ const GameForm = ({
     console.log('submitting', input);
     try {
       await client.resetStore();
-      const { data } = await createGame({
-        variables: {
-          input,
-        },
-      });
-      console.log(data);
+
+      if (projectData._id === '') {
+        const { data } = await createGame({
+          variables: {
+            input,
+          },
+        });
+        console.log(data);
+        returnData._id = data.createGame._id;
+      }
+      if (projectData._id !== '') {
+        const { data } = await updateGame({
+          variables: {
+            id: projectData._id,
+            game: input,
+          },
+        });
+        console.log(data);
+      }
       setIsLoading(false);
-      setMessage({ type: 'success', message: 'Logging In' });
-      onSubmit({ ...projectData, _id: data.createGame._id });
+      setMessage({ type: 'success', message: 'Saved Game' });
+      onSubmit(returnData);
     } catch (error) {
       console.log(error);
       setIsLoading(false);

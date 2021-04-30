@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   signIn, signOut, useSession, getSession,
 } from 'next-auth/client';
@@ -31,8 +31,12 @@ const Dashboard = ({ session, games = [] }) => {
   const [modalID, setModalID] = useState('');
   const [gameSet, setGameSet] = useState(games);
 
-  console.log('games', games);
-  console.log(session);
+  useEffect(() => {
+    console.log(gameSet);
+  }, [gameSet]);
+
+  // console.log('games', games);
+  // console.log(session);
 
   const saveGame = (project) => {
     console.log('saveGame', project);
@@ -78,7 +82,7 @@ const Dashboard = ({ session, games = [] }) => {
               <FormModal close={() => { setModalID(''); hide(); }}>
                 <GameForm
                   adminID={session.user._id}
-                  project={games.filter((p) => p._id === modalID)[0]}
+                  project={gameSet.filter((p) => p._id === modalID)[0]}
                   onCancel={() => { setModalID(''); hide(); }}
                   onSubmit={(g) => saveGame(g)}
                 />
