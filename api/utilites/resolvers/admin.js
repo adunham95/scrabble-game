@@ -4,61 +4,61 @@ import jwt from 'jsonwebtoken';
 import { connectToDatabase, collections } from '../mongodb';
 import { hashPassword, validatePassword } from '../utilities';
 
-export async function setAdmin({ admin }, context) {
+export async function setHost({ host }, context) {
   const { db } = await connectToDatabase();
 
-  console.log(admin);
+  console.log(host);
 
-  const prevAdmin = await db.collection(collections.admin).find({ email: admin.email }).toArray();
+  const prevHost = await db.collection(collections.host).find({ email: host.email }).toArray();
 
-  if (prevAdmin.length > 0) {
+  if (prevHost > 0) {
     throw new UserInputError('Email Already has account');
   }
 
-  const { hash, salt } = await hashPassword(admin.password);
+  const { hash, salt } = await hashPassword(host.password);
 
-  const adminUser = {
-    invite: admin.invite ? admin.invite : '',
-    email: admin.email,
+  const hostUser = {
+    invite: host.invite ? host.invite : '',
+    email: host.email,
     hash,
     salt,
   };
 
-  const newAdmin = await db.collection(collections.admin).insertOne(adminUser).then(({ ops }) => ops[0]);
+  const newHost = await db.collection(collections.host).insertOne(hostUser).then(({ ops }) => ops[0]);
 
-  return newAdmin;
+  return newHost;
 }
 
-export async function getAdmin(id) {
+export async function getHost(id) {
   const { db } = await connectToDatabase();
-  const admin = await db.collection(collections.admin).findOne({ _id: new ObjectId(id) });
+  const host = await db.collection(collections.host).findOne({ _id: new ObjectId(id) });
 
-  delete admin.hash;
-  delete admin.salt;
+  delete host.hash;
+  delete host.salt;
 
-  console.log(admin);
+  console.log(host);
 
-  return admin;
+  return host;
 }
 
-export async function loginAdmin({ admin }, context) {
+export async function loginHost({ host }, context) {
   const { db } = await connectToDatabase();
 
-  const adminAccountInfo = await db.collection(collections.admin).findOne({ email: admin.email });
+  const hostAccountInfo = await db.collection(collections.host).findOne({ email: host.email });
 
-  // console.log(adminAccountInfo);
+  // console.log(hostAccountInfo);
 
-  if (adminAccountInfo === null) {
+  if (hostAccountInfo === null) {
     throw new UserInputError('Email not found');
   }
 
-  const match = await validatePassword(adminAccountInfo.hash, adminAccountInfo.salt, admin.password);
+  const match = await validatePassword(hostAccountInfo.hash, hostAccountInfo.salt, host.password);
 
   if (!match) {
     throw new UserInputError('Password Error');
   }
 
-  const token = jwt.sign({ _id: adminAccountInfo._id }, 'secret');
+  const token = jwt.sign({ _id: hostAccountInfo._id }, 'secret');
   context.cookies.set('auth-token', token, {
     httpOnly: true,
     sameSite: 'lax',
@@ -67,7 +67,7 @@ export async function loginAdmin({ admin }, context) {
   });
 
   return {
-    _id: adminAccountInfo._id,
-    email: adminAccountInfo.email,
+    _id: hostAccountInfo._id,
+    email: hostAccountInfo.email,
   };
 }

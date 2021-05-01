@@ -7,7 +7,7 @@ module.exports = {
   async redirects() {
     return [
       // {
-      //   source: '/admin/login',
+      //   source: '/host/login',
       //   destination: '/api/auth/signin',
       //   permanent: false,
       // },

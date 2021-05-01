@@ -48,5 +48,5 @@ export async function connectToDatabase() {
 export const collections = {
   game: 'games',
   user: 'users',
-  admin: 'admin',
+  host: 'host',
 };
