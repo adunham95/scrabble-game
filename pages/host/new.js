@@ -2,26 +2,26 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { gql, useApolloClient, useMutation } from '@apollo/client';
 import { getApolloMessage } from '../../utilities/apollo_client/client';
-import styles from '../../pageStyles/admin.module.scss';
+import styles from '../../pageStyles/host.module.scss';
 
 const inviteRequired = true;
 
 const SignUpMutation = gql`
-mutation($admin:AdminInput){
-  createAdmin(admin:$admin){
+mutation($host:HostInput){
+  createHost(host:$hose){
     _id
     email
   }
 }
 `;
 
-const NewAdminPage = () => {
+const NewHostPage = () => {
   const client = useApolloClient();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
-  const [createAdmin] = useMutation(SignUpMutation);
+  const [createHost] = useMutation(SignUpMutation);
   const router = useRouter();
 
   const createUser = async (e) => {
@@ -35,9 +35,9 @@ const NewAdminPage = () => {
     }
     try {
       await client.resetStore();
-      const { data } = await createAdmin({
+      const { data } = await createHost({
         variables: {
-          admin: {
+          host: {
             email,
             password,
             invite: router.query.invite,
@@ -65,14 +65,14 @@ const NewAdminPage = () => {
 
   return (
     <div className={styles.center}>
-      <div className={styles.adminBox}>
+      <div className={styles.HostBox}>
         <div className={styles.tileContainer}>
           <div className={styles.tile}>
             <span className={styles.tileLetter}>A</span>
             <span className={styles.tileScore}>7</span>
           </div>
         </div>
-        <h1 className={styles.headline}>New Admin</h1>
+        <h1 className={styles.headline}>New Hose</h1>
         <form onSubmit={(e) => createUser(e)}>
           <input
             type="email"
@@ -97,4 +97,4 @@ const NewAdminPage = () => {
   );
 };
 
-export default NewAdminPage;
+export default NewHostPage;

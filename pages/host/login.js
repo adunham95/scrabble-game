@@ -2,12 +2,12 @@ import { gql, useApolloClient, useMutation } from '@apollo/client';
 import React, { useState } from 'react';
 import { signIn } from 'next-auth/client';
 import { getApolloMessage } from '../../utilities/apollo_client/client';
-import styles from '../../pageStyles/admin.module.scss';
+import styles from '../../pageStyles/host.module.scss';
 import FakeTile from '../../components/Tile/tileFake';
 
 const LoginMutation = gql`
-mutation($admin:AdminInput){
-  loginAdmin(admin:$admin){
+mutation($host:HostInput){
+  loginHost(host:$hose){
     _id
     email
   }
@@ -20,7 +20,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
-  const [loginAdmin] = useMutation(LoginMutation);
+  const [loginHost] = useMutation(LoginMutation);
 
   const login = async (e) => {
     e.preventDefault();
@@ -31,12 +31,12 @@ const Login = () => {
       setIsLoading(false);
       return;
     }
-    signIn('credentials', { email, password, callbackUrl: '/admin/dashboard' });
+    signIn('credentials', { email, password, callbackUrl: '/host/dashboard' });
     // try {
     //   await client.resetStore();
-    //   const { data } = await loginAdmin({
+    //   const { data } = await loginHost({
     //     variables: {
-    //       admin: {
+    //       host: {
     //         email,
     //         password,
     //       },
@@ -54,7 +54,7 @@ const Login = () => {
 
   return (
     <div className={styles.center}>
-      <div className={styles.adminBox}>
+      <div className={styles.hostBox}>
         {/* <div className={styles.tileContainer}>
           <div className={styles.tile}>
             <span className={styles.tileLetter}>A</span>

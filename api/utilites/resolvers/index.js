@@ -1,4 +1,4 @@
-import { getHost, loginHost, setHost } from './admin';
+import { getHost, loginHost, setHost } from './host';
 import {
   getGame, getGamesByHost, loginGame, setGame, updateGame,
 } from './game';

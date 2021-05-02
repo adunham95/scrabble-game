@@ -30,14 +30,14 @@ const options = {
       async authorize(credentials) {
         const { db } = await connectToDatabase();
 
-        const adminAccountInfo = await db.collection(collections.admin).findOne({ email: credentials.email });
-        const match = await validatePassword(adminAccountInfo.hash, adminAccountInfo.salt, credentials.password);
+        const hostAccountInfo = await db.collection(collections.host).findOne({ email: credentials.email });
+        const match = await validatePassword(hostAccountInfo.hash, hostAccountInfo.salt, credentials.password);
 
-        delete adminAccountInfo.hash;
-        delete adminAccountInfo.salt;
+        delete hostAccountInfo.hash;
+        delete hostAccountInfo.salt;
 
         if (match) {
-          return adminAccountInfo;
+          return hostAccountInfo;
         }
         return null;
       },

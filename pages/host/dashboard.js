@@ -11,10 +11,10 @@ import { FormModal } from '../../components/Form/FormModal';
 import GameForm from '../../components/Dashboard/GameEditor';
 
 const FetchGamesQuery = gql`
-  query($adminID:String!){
-    getGamesByAdmin(adminID:$adminID){
+  query($hostID:String!){
+    getGamesByHost(hostID:$hostID){
       _id
-    adminID
+    hostID
     name
     password
     tiles{
@@ -81,7 +81,7 @@ const Dashboard = ({ session, games = [] }) => {
             content={(hide) => (
               <FormModal close={() => { setModalID(''); hide(); }}>
                 <GameForm
-                  adminID={session.user._id}
+                  hostID={session.user._id}
                   project={gameSet.filter((p) => p._id === modalID)[0]}
                   onCancel={() => { setModalID(''); hide(); }}
                   onSubmit={(g) => saveGame(g)}
@@ -103,7 +103,7 @@ export async function getServerSideProps(context) {
   console.log(session);
   const { data } = await apolloClient.query({
     query: FetchGamesQuery,
-    variables: { adminID: session.user._id ?? '' },
+    variables: { hostID: session.user._id ?? '' },
   });
 
   console.log(data);
@@ -111,7 +111,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       session,
-      games: data.getGamesByAdmin,
+      games: data.getGamesByHost,
     },
   };
 }
