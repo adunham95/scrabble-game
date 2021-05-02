@@ -5,8 +5,8 @@ export const typeDefs = gql`
 type Query{
     #Games
     getGame(id: ID!): Game
-    getGamesByAdmin(adminID: String!): [Game]
+    getGamesByHost(hostID: String!): [Game]
     getTiles(gameID: ID): [Tile]
-    getAdmin(id: ID!): Admin!
+    getHost(id: ID!): Host!
 }
 `;

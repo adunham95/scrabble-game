@@ -26,20 +26,20 @@ export async function getGame(id, context) {
   return game;
 }
 
-export async function getGamesByAdmin(adminID) {
+export async function getGamesByHost(hostID) {
   const { db } = await connectToDatabase();
-  const game = await db.collection(collections.game).find({ adminID }).toArray();
+  const game = await db.collection(collections.game).find({ hostID }).toArray();
   return game;
 }
 
 export async function setGame(data, context) {
   const { db } = await connectToDatabase();
   const defaultGame = {
-    users: [], adminID: '', rounds: 0, tiles: [], ...data.input,
+    users: [], hostID: '', rounds: 0, tiles: [], ...data.input,
   };
 
-  if (defaultGame.adminID < 1 || defaultGame.adminID === '') {
-    throw new UserInputError('No Admin user Specified');
+  if (defaultGame.hostID < 1 || defaultGame.hostID === '') {
+    throw new UserInputError('No Host user Specified');
   }
   if (defaultGame.name < 1 || defaultGame.name === '') {
     throw new UserInputError('No Game name Specified');
@@ -49,7 +49,7 @@ export async function setGame(data, context) {
     users: [],
     createdAt: Date.now(),
     password: '',
-    adminID: defaultGame.adminID,
+    hostID: defaultGame.hostID,
     name: defaultGame.name,
     active: true,
     rounds: defaultGame.rounds,
@@ -66,15 +66,15 @@ export async function setGame(data, context) {
 export async function updateGame(id, data) {
   const { db } = await connectToDatabase();
 
-  // TODO validate admin ids. So only the admin can update there own content
+  // TODO validate host ids. So only the host can update there own content
 
   const newGame = {
     updatedAt: Date.now(),
     ...data,
   };
 
-  // Remove the adminID so it cant be switched to another user
-  delete newGame.adminID;
+  // Remove the hsotID so it cant be switched to another user
+  delete newGame.hostID;
 
   const newGameData = await db
     .collection(collections.game)

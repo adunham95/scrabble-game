@@ -4,8 +4,8 @@ export const typeDefs = gql`
 
     type Mutation{
 
-        createAdmin(admin: AdminInput): Admin
-        loginAdmin(admin: AdminInput): Admin
+        createHost(host: HostInput): Host
+        loginHost(host: HostInput): Host
 
         createGame(input: GameInput): Game
         updateGame(id: ID, game: GameInput): Game

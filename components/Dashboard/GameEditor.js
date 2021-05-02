@@ -90,7 +90,7 @@ const fullAlphabet = [
 ];
 
 const projectDefault = {
-  _id: '', name: '', adminID: '', tiles: fullAlphabet, rounds: 0,
+  _id: '', name: '', hostID: '', tiles: fullAlphabet, rounds: 0,
 };
 
 const tileDefault = {
@@ -115,7 +115,7 @@ mutation($id:ID!,$game:GameInput){
 `;
 
 const GameForm = ({
-  project, onSubmit = () => {}, onCancel = () => {}, adminID = '',
+  project, onSubmit = () => {}, onCancel = () => {}, hostID = '',
 }) => {
   const client = useApolloClient();
   const [createGame] = useMutation(CreateGameMutation);
@@ -170,7 +170,7 @@ const GameForm = ({
   const submit = async () => {
     const returnData = { ...projectData };
     const input = {
-      adminID,
+      hostID,
       name: projectData.name,
       rounds: 0,
       tiles: projectData.tiles.map((t) => ({ ...t })),

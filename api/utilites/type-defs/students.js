@@ -24,15 +24,4 @@ input StudentColorInput{
     name: String!
     color: String!
 }
-
-# type Admin {
-#     id: ID!
-#     username: String!
-#     password: String!
-# }
-
-# input AdminInput {
-#     username: String!
-#     password: String!
-# }
 #     `;

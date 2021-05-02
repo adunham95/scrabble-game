@@ -5,7 +5,7 @@ type Game {
     _id: ID!
     name: String
     users: [Student]
-    adminID: String
+    hostID: String
     password: String
     rounds: Int
     tiles: [Tile]
@@ -26,7 +26,7 @@ type GameLogin {
 
 input GameInput {
     users: [String]
-    adminID: String!
+    hostID: String!
     name: String
     rounds: Int
     color: String

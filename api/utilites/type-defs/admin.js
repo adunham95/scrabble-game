@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server-micro';
 
 export const typeDefs = gql`
-type Admin {
+type Host {
     _id: ID!
     email: String!
     games: [Game]
@@ -10,7 +10,7 @@ type Admin {
     invite: String
 }
 
-input AdminInput{
+input HostInput{
     email: String!
     password: String!
     invite: String
