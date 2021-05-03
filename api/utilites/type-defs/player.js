@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server-micro';
 
 export const typeDefs = gql`
-    type Student {
+    type Player {
     _id: ID!
     icon: String!
     color: String!
@@ -10,17 +10,17 @@ export const typeDefs = gql`
     name: String!
 }
 
-type StudentColor{
+type PlayerColor{
     name: String!
     color: String!
 }
 
-input StudentInput{
+input PlayerInput{
     icon: String!
-    color: StudentColorInput!
+    color: PlayerColorInput!
 }
 
-input StudentColorInput{
+input PlayerColorInput{
     name: String!
     color: String!
 }
