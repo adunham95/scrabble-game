@@ -61,7 +61,7 @@ const Dashboard = ({ session, games = [] }) => {
           <h1 style={{ padding: '20px' }}>
             Hello
             {' '}
-            {session.user.firstName}
+            {session.host.firstName}
           </h1>
           <div style={{ display: 'flex', flexWrap: 'wrap', background: '#e8e8e8' }}>
             <NewGameBlock onClick={() => setModalID('new')} />
@@ -81,7 +81,7 @@ const Dashboard = ({ session, games = [] }) => {
             content={(hide) => (
               <FormModal close={() => { setModalID(''); hide(); }}>
                 <GameForm
-                  hostID={session.user._id}
+                  hostID={session.host._id}
                   project={gameSet.filter((p) => p._id === modalID)[0]}
                   onCancel={() => { setModalID(''); hide(); }}
                   onSubmit={(g) => saveGame(g)}
@@ -103,7 +103,7 @@ export async function getServerSideProps(context) {
   console.log(session);
   const { data } = await apolloClient.query({
     query: FetchGamesQuery,
-    variables: { hostID: session.user._id ?? '' },
+    variables: { hostID: session.host._id ?? '' },
   });
 
   console.log(data);

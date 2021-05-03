@@ -20,10 +20,10 @@ const apolloServer = new ApolloServer({
   context: ({ req, res }) => {
     const cookies = new Cookies(req, res);
     const token = cookies.get('auth-token');
-    const user = verifyToken(token);
+    const host = verifyToken(token);
     return {
       cookies,
-      user,
+      host,
     };
   },
 });

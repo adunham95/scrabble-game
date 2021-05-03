@@ -35,7 +35,7 @@ export async function getGamesByHost(hostID) {
 export async function setGame(data, context) {
   const { db } = await connectToDatabase();
   const defaultGame = {
-    users: [], hostID: '', rounds: 0, tiles: [], ...data.input,
+    players: [], hostID: '', rounds: 0, tiles: [], ...data.input,
   };
 
   if (defaultGame.hostID < 1 || defaultGame.hostID === '') {
@@ -46,7 +46,7 @@ export async function setGame(data, context) {
   }
 
   const newGame = {
-    users: [],
+    players: [],
     createdAt: Date.now(),
     password: '',
     hostID: defaultGame.hostID,
@@ -89,17 +89,17 @@ export async function updateGame(id, data) {
   return newGameData;
 }
 
-export async function loginGame(password, student) {
+export async function loginGame(password, player) {
   if (password < 1 || password === '') {
     throw new UserInputError('No Password');
   }
 
-  const defaultUser = {
-    color: student.color.color,
-    icon: student.icon,
+  const defaultPlayer = {
+    color: player.color.color,
+    icon: player.icon,
     points: 0,
     tiles: [],
-    name: `${capitalize(student.color.name)} ${capitalize(student.icon)}`,
+    name: `${capitalize(player.color.name)} ${capitalize(player.icon)}`,
   };
 
   const { db } = await connectToDatabase();
@@ -109,11 +109,11 @@ export async function loginGame(password, student) {
     throw new UserInputError('Game not found');
   }
 
-  const newUser = await db.collection(collections.user).insertOne(defaultUser).then(({ ops }) => ops[0]);
+  const newPlayer = await db.collection(collections.player).insertOne(defaultPlayer).then(({ ops }) => ops[0]);
 
-  await db.collection(collections.game).updateOne({ _id: game._id }, { $push: { users: newUser._id } });
+  await db.collection(collections.game).updateOne({ _id: game._id }, { $push: { players: newPlayer._id } });
 
-  game.userID = newUser._id;
+  game.playerID = newPlayer._id;
 
   return game;
 }

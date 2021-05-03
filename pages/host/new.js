@@ -24,7 +24,7 @@ const NewHostPage = () => {
   const [createHost] = useMutation(SignUpMutation);
   const router = useRouter();
 
-  const createUser = async (e) => {
+  const createHostUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setMessage({ type: '', message: '' });
@@ -73,7 +73,7 @@ const NewHostPage = () => {
           </div>
         </div>
         <h1 className={styles.headline}>New Hose</h1>
-        <form onSubmit={(e) => createUser(e)}>
+        <form onSubmit={(e) => createHostUser(e)}>
           <input
             type="email"
             value={email}

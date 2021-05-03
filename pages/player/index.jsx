@@ -22,11 +22,11 @@ const colors = [
 ];
 
 const LogInMutation = gql`
-mutation($password:String!,$student:StudentInput!){
-  loginGame(password:$password, user:$student){
+mutation($password:String!,$player:PlayerInput!){
+  loginGame(password:$password, player:$player){
     name
     _id
-    userID
+    playerID
   }
 }
 `;
@@ -53,7 +53,7 @@ const Index = () => {
       const { data } = await loginGame({
         variables: {
           password,
-          student: {
+          player: {
             color: selectedColor,
             icon: selectedAvatar,
           },
@@ -62,7 +62,7 @@ const Index = () => {
       console.log(data);
       setIsLoading(false);
       setMessage({ type: 'success', message: 'Going to game' });
-      cookieCutter.set('userID', data.loginGame.userID);
+      cookieCutter.set('playerID', data.loginGame.playerID);
     } catch (error) {
       console.log(error);
       setIsLoading(false);

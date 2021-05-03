@@ -14,6 +14,6 @@ export const resolvers = {
     loginHost: async (_parent, _args, context, _info) => loginHost(_args, context),
     createGame: async (_parent, _args, context, _info) => setGame(_args),
     updateGame: async (_parent, _args, context, _info) => updateGame(_args.id, _args.game),
-    loginGame: async (_, args) => loginGame(args.password, args.user),
+    loginGame: async (_, args) => loginGame(args.password, args.player),
   },
 };

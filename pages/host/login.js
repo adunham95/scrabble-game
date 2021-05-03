@@ -94,7 +94,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button>
-            Create User
+            Create Host
           </button>
           <p className={`alert-${message.type}`}>
             {message.message}

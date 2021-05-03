@@ -7,19 +7,19 @@ import { validatePassword } from '../../../api/utilites/utilities';
 const options = {
   site: process.env.NEXTAUTH_URL,
   callbacks: {
-    async signIn(user, account, profile) {
+    async signIn(host, account, profile) {
       return true;
     },
     async redirect(url, baseUrl) {
       return baseUrl;
     },
-    async session(session, user) {
-      session.user = user;
+    async session(session, host) {
+      session.host = host;
       return session;
     },
-    async jwt(token, user, account, profile, isNewUser) {
-      if (user?._id) {
-        token = { ...token, ...user };
+    async jwt(token, host, account, profile, isNewUser) {
+      if (host?._id) {
+        token = { ...token, ...host };
       }
       return token;
     },

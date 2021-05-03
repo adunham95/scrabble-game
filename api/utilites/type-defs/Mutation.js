@@ -9,11 +9,11 @@ export const typeDefs = gql`
 
         createGame(input: GameInput): Game
         updateGame(id: ID, game: GameInput): Game
-        loginGame(password: String!, user:StudentInput!): GameLogin
+        loginGame(password: String!, player:PlayerInput!): GameLogin
 
         createTile(input: SingleTileInput): Tile
 
-        createStudent(input: StudentInput): Student
-        # updateStudent(id: ID!, input: StudentInput): Student
+        createPlayer(input: PlayerInput): Player
+        # updatePlayer(id: ID!, input: PlayerInput): Player
     }
     `;

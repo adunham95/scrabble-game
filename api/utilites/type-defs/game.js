@@ -4,7 +4,7 @@ export const typeDefs = gql`
 type Game {
     _id: ID!
     name: String
-    users: [Student]
+    players: [Player]
     hostID: String
     password: String
     rounds: Int
@@ -21,11 +21,10 @@ type GameLogin {
     name: String
     tiles: [Tile]
     password: String!
-    userID: ID!
 }
 
 input GameInput {
-    users: [String]
+    players: [String]
     hostID: String!
     name: String
     rounds: Int

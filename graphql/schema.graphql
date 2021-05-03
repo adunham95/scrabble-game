@@ -1,4 +1,4 @@
-type Student {
+type Player {
     id: ID!
     color: String!
     icon: String!
@@ -6,7 +6,7 @@ type Student {
     tiles: [Tile]
 }
 
-input StudentInput{
+input PlayerInput{
     color: String!
     icon: String!
 }
@@ -37,13 +37,13 @@ type Game {
     id: ID!
     password: String
     tiles: [Tile]
-    users: [Student]
+    players: [Player]
     host: Host!
 }
 
 input GameInput {
     password: String!
-    users: [Student]
+    players: [Player]
     host: Host!
 }
 
@@ -57,6 +57,6 @@ type Mutation{
     createGame(input: GameInput): Game
     updateGame(id: ID, input: GameInput): Game
 
-    createStudent(input: StudentInput): Student
-    updateStudent(id: ID!, input: StudentInput): Student
+    createPlayer(input: PlayerInput): Player
+    updatePlayer(id: ID!, input: PlayerInput): Player
 }
