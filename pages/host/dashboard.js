@@ -101,6 +101,26 @@ export async function getServerSideProps(context) {
   const apolloClient = initializeApollo();
   const session = await getSession(context);
   console.log(session);
+
+  if (session === null && context.res) {
+    return {
+      redirect: {
+        destination: '/player',
+        permanent: false,
+      },
+    };
+    // context.res.writeHead(301, {
+    //   Location: '/login',
+    // });
+    // context.res.end();
+    // return {
+    //   props: {
+    //     session,
+    //     games: [],
+    //   },
+    // };
+  }
+
   const { data } = await apolloClient.query({
     query: FetchGamesQuery,
     variables: { hostID: session.host._id ?? '' },
