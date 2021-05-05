@@ -1,5 +1,6 @@
 import { UserInputError } from 'apollo-server-errors';
 import { ObjectId } from 'bson';
+import { generateID } from '../../../utilities/utils';
 import { connectToDatabase, collections } from '../mongodb';
 import { capitalize, makeID } from '../utilities';
 
@@ -95,18 +96,39 @@ export async function startGame(id) {
   const game = await db.collection(collections.game).findOne({ _id: new ObjectId(id) });
   console.log(game);
 
-  if (game.password !== '' || game.password !== null) {
+  if (game.password !== '') {
     throw new UserInputError('Game already started');
   }
 
   // TODO validate host ids. So only the host can update there own content
+
+  // Generate all the tiles with there own ID
+  const gameTiles = [];
+  game.tiles.forEach((t) => {
+    let i = 0;
+    while (i < t.weight) {
+      gameTiles.push({
+        _id: generateID(4),
+        letter: t.letter,
+        point: t.point,
+        position: {
+          x: null, y: null,
+        },
+        playerID: null,
+      });
+      i++;
+    }
+  });
 
   const newGame = {
     updatedAt: Date.now(),
     password: await generatePassword(db),
     rounds: 0,
     players: [],
+    gameTiles,
   };
+
+  console.log(newGame);
 
   const newGameData = await db
     .collection(collections.game)
@@ -157,10 +179,13 @@ export async function loginGame(password, player) {
     points: 0,
     tiles: [],
     name: `${capitalize(player.color.name)} ${capitalize(player.icon)}`,
+    gameID: '',
   };
 
   const { db } = await connectToDatabase();
   const game = await db.collection(collections.game).findOne({ password });
+
+  defaultPlayer.gameID = game._id;
 
   if (game === null) {
     throw new UserInputError('Game not found');

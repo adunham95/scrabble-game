@@ -9,6 +9,7 @@ type Game {
     password: String
     rounds: Int
     tiles: [Tile]
+    gameTiles: [GameTile]
 }
 
 type GameSettings{
@@ -37,6 +38,19 @@ type Tile {
     point: Int
     letter: String!
     weight: Int
+}
+
+type GameTile{
+    _id: String!
+    point: Int
+    letter: String!
+    position: TilePosition
+    playerID: String
+}
+
+type TilePosition {
+    x: String
+    y: String
 }
 
 input SingleTileInput {
