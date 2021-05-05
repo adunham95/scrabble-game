@@ -89,6 +89,63 @@ export async function updateGame(id, data) {
   return newGameData;
 }
 
+export async function startGame(id) {
+  const { db } = await connectToDatabase();
+
+  const game = await db.collection(collections.game).findOne({ _id: new ObjectId(id) });
+  console.log(game);
+
+  if (game.password !== '' || game.password !== null) {
+    throw new UserInputError('Game already started');
+  }
+
+  // TODO validate host ids. So only the host can update there own content
+
+  const newGame = {
+    updatedAt: Date.now(),
+    password: await generatePassword(db),
+    rounds: 0,
+    players: [],
+  };
+
+  const newGameData = await db
+    .collection(collections.game)
+    .findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: newGame },
+      { returnOriginal: false },
+    ).then(({ value }) => value);
+
+  console.log(newGameData);
+
+  return newGameData;
+}
+
+export async function resetGame(id) {
+  const { db } = await connectToDatabase();
+
+  // TODO validate host ids. So only the host can update there own content
+
+  const newGame = {
+    updatedAt: Date.now(),
+    password: '',
+    rounds: 0,
+    players: [],
+  };
+
+  const newGameData = await db
+    .collection(collections.game)
+    .findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: newGame },
+      { returnOriginal: false },
+    ).then(({ value }) => value);
+
+  console.log(newGameData);
+
+  return newGameData;
+}
+
 export async function loginGame(password, player) {
   if (password < 1 || password === '') {
     throw new UserInputError('No Password');
@@ -111,7 +168,9 @@ export async function loginGame(password, player) {
 
   const newPlayer = await db.collection(collections.player).insertOne(defaultPlayer).then(({ ops }) => ops[0]);
 
-  await db.collection(collections.game).updateOne({ _id: game._id }, { $push: { players: newPlayer._id } });
+  await db
+    .collection(collections.game)
+    .updateOne({ _id: game._id }, { $push: { players: newPlayer._id } });
 
   game.playerID = newPlayer._id;
 

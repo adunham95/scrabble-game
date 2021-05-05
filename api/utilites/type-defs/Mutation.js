@@ -10,6 +10,8 @@ export const typeDefs = gql`
         createGame(input: GameInput): Game
         updateGame(id: ID, game: GameInput): Game
         loginGame(password: String!, player:PlayerInput!): GameLogin
+        startGame(id: ID!): Game
+        resetGame(id: ID!): Game
 
         createTile(input: SingleTileInput): Tile
 
