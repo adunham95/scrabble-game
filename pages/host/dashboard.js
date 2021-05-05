@@ -96,8 +96,6 @@ const Dashboard = ({ session, games = [] }) => {
 };
 
 export async function getServerSideProps(context) {
-  // TODO set to only work when logged in
-
   const apolloClient = initializeApollo();
   const session = await getSession(context);
   console.log(session);
@@ -109,16 +107,6 @@ export async function getServerSideProps(context) {
         permanent: false,
       },
     };
-    // context.res.writeHead(301, {
-    //   Location: '/login',
-    // });
-    // context.res.end();
-    // return {
-    //   props: {
-    //     session,
-    //     games: [],
-    //   },
-    // };
   }
 
   const { data } = await apolloClient.query({
